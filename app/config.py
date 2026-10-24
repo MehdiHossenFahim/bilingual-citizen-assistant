@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     # Application
     app_env: str = Field("development", description="Environment: development | production")
     app_host: str = "0.0.0.0"
-    app_port: int = 8000
+    app_port: int = Field(8000, validation_alias="PORT")
     log_level: str = "INFO"
 
     # Google Gemini

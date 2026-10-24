@@ -39,7 +39,21 @@ class EmbeddingModel:
         if self._model is not None:
             return
 
-        # Prefer SentenceTransformer (clean, fast, no pyarrow conflicts)
+        # 1. Cloud-hosted Gemini Embeddings (Zero RAM footprint — ideal for 512MB cloud free tiers)
+        if "gemini" in self._model_name.lower():
+            try:
+                from google import genai
+                from app.config import get_settings
+                settings = get_settings()
+                self._model = genai.Client(api_key=settings.gemini_api_key)
+                self._backend = "gemini"
+                logger.info("Using zero-RAM cloud embeddings via Gemini API: %s", self._model_name)
+                return
+            except Exception as exc:
+                logger.error("Failed to initialize Gemini cloud embeddings: %s", exc)
+                raise
+
+        # 2. Local SentenceTransformer with automatic low-RAM fallback
         try:
             import torch
             from sentence_transformers import SentenceTransformer  # type: ignore
@@ -49,25 +63,23 @@ class EmbeddingModel:
             self._backend = "sentence_transformers"
             logger.info("Embedding model loaded successfully.")
             return
-        except Exception as exc:
-            logger.info("sentence-transformers not available (%s), trying FlagEmbedding…", exc)
-
-        try:
-            import torch
-            has_cuda = torch.cuda.is_available()
-            device = "cuda" if has_cuda else "cpu"
-            from FlagEmbedding import BGEM3FlagModel  # type: ignore
-            logger.info("Loading embedding model via FlagEmbedding: %s (device=%s, fp16=%s)", self._model_name, device, has_cuda)
-            self._model = BGEM3FlagModel(
-                self._model_name,
-                use_fp16=has_cuda,
-                device=device,
+        except (Exception, MemoryError) as exc:
+            logger.warning(
+                "Local model '%s' failed or memory constrained (%s). Auto-fallback to zero-RAM 'gemini-embedding-001' to prevent server OOM.",
+                self._model_name, exc,
             )
-            self._backend = "flagembedding"
-            logger.info("Embedding model loaded via FlagEmbedding.")
-        except Exception as exc:
-            logger.error("Failed to load embedding model: %s", exc)
-            raise
+            try:
+                from google import genai
+                from app.config import get_settings
+                settings = get_settings()
+                self._model = genai.Client(api_key=settings.gemini_api_key)
+                self._model_name = "gemini-embedding-001"
+                self._backend = "gemini"
+                logger.info("Auto-fallback to zero-RAM gemini-embedding-001 active.")
+                return
+            except Exception as e2:
+                logger.error("Fallback to Gemini embeddings failed: %s", e2)
+                raise exc
 
     def encode(self, texts: list[str], batch_size: int = 12) -> np.ndarray:
         """
@@ -75,6 +87,22 @@ class EmbeddingModel:
         Returns float32 array of shape (N, dim), L2-normalised.
         """
         self._load()
+
+        # Gemini Cloud API backend (Zero RAM)
+        if getattr(self, "_backend", "") == "gemini":
+            embeddings_list: list[list[float]] = []
+            for i in range(0, len(texts), batch_size):
+                batch = texts[i : i + batch_size]
+                res = self._model.models.embed_content(
+                    model=self._model_name,
+                    contents=batch,
+                )
+                for emb in res.embeddings:
+                    embeddings_list.append(emb.values)
+            arr = np.array(embeddings_list, dtype=np.float32)
+            norms = np.linalg.norm(arr, axis=1, keepdims=True)
+            norms = np.where(norms == 0, 1, norms)
+            return arr / norms
 
         if getattr(self, "_backend", "") == "sentence_transformers":
             embeddings = self._model.encode(

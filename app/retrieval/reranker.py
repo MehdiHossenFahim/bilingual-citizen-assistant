@@ -42,6 +42,11 @@ class CrossEncoderReranker:
         if self._model is not None:
             return
 
+        if not self.model_name or self.model_name.lower() in ("none", "disable", "false", ""):
+            logger.info("Reranker disabled by configuration (operating in RRF mode).")
+            self._available = False
+            return
+
         # Prefer sentence-transformers CrossEncoder (no pyarrow/datasets dependency)
         try:
             import torch
@@ -53,8 +58,8 @@ class CrossEncoderReranker:
             self._available = True
             logger.info("Reranker loaded successfully.")
             return
-        except Exception as exc:
-            logger.info("sentence-transformers CrossEncoder not available (%s), trying FlagReranker…", exc)
+        except (Exception, MemoryError) as exc:
+            logger.info("sentence-transformers CrossEncoder not available/low memory (%s), trying FlagReranker…", exc)
 
         try:
             import torch
@@ -65,9 +70,9 @@ class CrossEncoderReranker:
             self._backend = "flagembedding"
             self._available = True
             logger.info("Reranker loaded via FlagReranker.")
-        except Exception as exc:
+        except (Exception, MemoryError) as exc:
             logger.warning(
-                "Reranker not available (%s). Proceeding without reranking.", exc
+                "Reranker not available or memory constrained (%s). Operating in RRF fusion mode.", exc
             )
             self._available = False
 

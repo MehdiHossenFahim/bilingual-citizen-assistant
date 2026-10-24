@@ -327,3 +327,4 @@ if __name__ == "__main__":
     out_file = "reports/Capstone_Project_Final_Report_Mehedi_Hossen_Fahim.docx"
     os.makedirs(os.path.dirname(out_file), exist_ok=True)
     create_report(out_file)
+
