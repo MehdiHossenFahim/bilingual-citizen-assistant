@@ -6,7 +6,10 @@ import ChatMessage from './components/ChatMessage';
 import ExampleQuestions from './components/ExampleQuestions';
 import SystemStatusModal from './components/SystemStatusModal';
 
-const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || '').replace(/\/$/, '');
+const BACKEND_URL = (
+  import.meta.env.VITE_BACKEND_URL ||
+  (import.meta.env.PROD ? 'https://bilingual-citizen-assistant.onrender.com' : 'http://localhost:8000')
+).replace(/\/$/, '');
 const CHAT_ENDPOINT = `${BACKEND_URL}/api/v1/chat`;
 const FEEDBACK_ENDPOINT = `${BACKEND_URL}/api/v1/feedback`;
 const HEALTH_ENDPOINT = `${BACKEND_URL}/health`;
