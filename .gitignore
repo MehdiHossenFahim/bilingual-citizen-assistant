@@ -1,0 +1,64 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# === Virtual environment ===
+.venv/
+venv/
+env/
+.env
+
+# === Secrets — NEVER COMMIT ===
+.env
+*.pem
+*.key
+*_secret*
+*credentials*.json
+
+# === Data & Indexes ===
+data/chroma_db/
+data/bm25_index.pkl
+data/metadata.db
+data/raw_pdfs/
+data/raw_html/
+# Keep the sample data and README
+!data/sources/
+!data/README.md
+
+# === Model cache ===
+.cache/
+models/
+huggingface_cache/
+
+# === Testing ===
+.pytest_cache/
+.coverage
+htmlcov/
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+logs/
+
+# === Node / Frontend ===
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+.eslintcache
+
+
