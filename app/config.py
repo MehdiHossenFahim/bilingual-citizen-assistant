@@ -50,9 +50,9 @@ class Settings(BaseSettings):
     generation_max_tokens: int = 2048
     generation_temperature: float = Field(0.1, ge=0.0, le=2.0)
 
-    # Embedding / Reranker
-    embedding_model: str = "BAAI/bge-m3"
-    reranker_model: str = "BAAI/bge-reranker-v2-m3"
+    # Embedding / Reranker (Defaults optimized for zero-RAM cloud deployment)
+    embedding_model: str = "gemini-embedding-001"
+    reranker_model: str = "none"
 
     # Rate limiting
     rate_limit_requests: int = 20

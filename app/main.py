@@ -68,23 +68,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     )
     app.state.dense_index = dense
 
-    # ---- Auto-ingest sample data if index is not ready ----
-    if not bm25.is_ready or not dense.is_ready:
-        from pathlib import Path
-        sample_path = Path(__file__).parent.parent / "data" / "sources" / "sample_data.json"
-        if sample_path.exists():
-            logger.info("Empty index detected. Auto-ingesting official citizen services sample data...")
-            try:
-                from app.ingestion.loaders import JSONFAQLoader
-                from scripts.ingest import run_ingestion
-                loader = JSONFAQLoader()
-                docs = loader.load_file(sample_path)
-                run_ingestion(docs, settings)
-                bm25.load()
-                logger.info("Auto-ingestion completed successfully.")
-            except Exception as e:
-                logger.warning("Auto-ingestion skipped or failed: %s", e)
-
     # ---- Reranker ----
     from app.retrieval.reranker import CrossEncoderReranker
     reranker = CrossEncoderReranker(settings.reranker_model)
@@ -108,9 +91,33 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     from app.graph.workflow import RAGWorkflow
     app.state.workflow = RAGWorkflow()
 
-    logger.info("All components initialised. Application ready.")
+    # ---- Non-blocking background auto-ingestion ----
+    # Runs asynchronously in a worker thread so Uvicorn can immediately bind the port
+    # and satisfy cloud health checks / port scanners (e.g. Render) in < 1 second.
+    if not bm25.is_ready or not dense.is_ready:
+        import asyncio
+        from pathlib import Path
 
-    yield  # Application runs here
+        async def _background_ingest():
+            sample_path = Path(__file__).parent.parent / "data" / "sources" / "sample_data.json"
+            if sample_path.exists():
+                logger.info("Empty index detected. Ingesting official citizen services sample data in background...")
+                try:
+                    from app.ingestion.loaders import JSONFAQLoader
+                    from scripts.ingest import run_ingestion
+                    loader = JSONFAQLoader()
+                    docs = loader.load_file(sample_path)
+                    await asyncio.to_thread(run_ingestion, docs, settings)
+                    bm25.load()
+                    logger.info("Background auto-ingestion completed successfully. Knowledge base is ready.")
+                except Exception as e:
+                    logger.warning("Background auto-ingestion skipped or failed: %s", e)
+
+        asyncio.create_task(_background_ingest())
+
+    logger.info("All components initialised. Server listening and ready.")
+
+    yield  # Application runs here and port is immediately available!
 
     logger.info("Shutting down…")
 
@@ -134,14 +141,13 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
-    # CORS
-    origins = ["*"] if not settings.is_production else [settings.backend_url]
+    # CORS (Permit Vercel frontend, local dev, and public clients)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins,
+        allow_origins=["*"],
         allow_credentials=False,
-        allow_methods=["GET", "POST"],
-        allow_headers=["Content-Type", "Authorization"],
+        allow_methods=["GET", "POST", "OPTIONS"],
+        allow_headers=["*"],
     )
 
     # Rate Limiting (protect LLM / compute resources)

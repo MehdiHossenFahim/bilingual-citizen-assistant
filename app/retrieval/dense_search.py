@@ -40,7 +40,7 @@ class EmbeddingModel:
             return
 
         # 1. Cloud-hosted Gemini Embeddings (Zero RAM footprint — ideal for 512MB cloud free tiers)
-        if "gemini" in self._model_name.lower():
+        if "gemini" in self._model_name.lower() or "text-embedding" in self._model_name.lower():
             try:
                 from google import genai
                 from app.config import get_settings
@@ -97,8 +97,11 @@ class EmbeddingModel:
                     model=self._model_name,
                     contents=batch,
                 )
-                for emb in res.embeddings:
-                    embeddings_list.append(emb.values)
+                if hasattr(res, "embeddings") and res.embeddings:
+                    for emb in res.embeddings:
+                        embeddings_list.append(emb.values)
+                elif hasattr(res, "embedding") and res.embedding:
+                    embeddings_list.append(res.embedding.values)
             arr = np.array(embeddings_list, dtype=np.float32)
             norms = np.linalg.norm(arr, axis=1, keepdims=True)
             norms = np.where(norms == 0, 1, norms)
