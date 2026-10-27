@@ -315,28 +315,11 @@ def create_report(output_path: str):
         "The Bilingual Citizen Services AI Assistant successfully resolves the twin challenges of public procedural fragmentation and generative AI hallucinations. By unifying dense multilingual retrieval, sparse keyword indexing (BM25), an agentic LangGraph state machine, and a responsive frontend with interactive citation pill navigation, the system delivers grounded, verifiable guidance in under 7 seconds. The completed deliverables satisfy all requirements for capstone submission."
     )
 
-    # Save with permission retry fallback if file is locked in Microsoft Word
-    target_path = output_path
-    try:
-        doc.save(target_path)
-    except PermissionError:
-        base, ext = os.path.splitext(output_path)
-        target_path = f"{base}_Submission{ext}"
-        doc.save(target_path)
-    print(f"Report successfully generated at: {target_path}")
-
-    # Also attempt copying to root workspace
-    root_copy = "Capstone_Project_Final_Report_Mehedi_Hossen_Fahim.docx"
-    try:
-        shutil.copyfile(target_path, root_copy)
-        print(f"Copied to root workspace at: {root_copy}")
-    except PermissionError:
-        root_fallback = "Capstone_Project_Final_Report_Mehedi_Hossen_Fahim_Submission.docx"
-        shutil.copyfile(target_path, root_fallback)
-        print(f"Root file locked; copied to: {root_fallback}")
+    # Save directly to target output path
+    doc.save(output_path)
+    print(f"Report successfully generated at: {output_path}")
 
 
 if __name__ == "__main__":
-    out_file = "reports/Capstone_Project_Final_Report_Mehedi_Hossen_Fahim.docx"
-    os.makedirs(os.path.dirname(out_file), exist_ok=True)
+    out_file = "Capstone_Project_Final_Report_Mehedi_Hossen_Fahim.docx"
     create_report(out_file)

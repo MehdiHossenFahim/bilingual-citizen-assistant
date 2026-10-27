@@ -277,3 +277,4 @@ export default function MarkdownView({ content, onCitationClick }) {
     </div>
   );
 }
+
