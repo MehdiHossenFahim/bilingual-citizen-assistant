@@ -149,7 +149,7 @@ def retrieve(state: RAGState) -> dict[str, Any]:
         dense_results = _dense_index.retrieve(
             query,
             top_k=settings.dense_top_k,
-            category_filter=category if category != "general" else None,
+            category_filter=None,  # Search entire knowledge base; RRF handles fusion
         )
     else:
         logger.warning("Dense index not ready.")
@@ -192,7 +192,7 @@ def evaluate_evidence(state: RAGState) -> dict[str, Any]:
 
     Rules:
     - If no passages: insufficient
-    - If top reranker score < threshold: insufficient
+    - If normalized evidence score < threshold: insufficient
     - If passages come from conflicting dates on time-sensitive info: flag it
     """
     from app.config import get_settings
@@ -209,14 +209,30 @@ def evaluate_evidence(state: RAGState) -> dict[str, Any]:
             "evidence_notes": ["No relevant passages found in the knowledge base."],
         }
 
-    top_score = reranked[0][2] if reranked else 0.0
+    top_passage = reranked[0]
+    top_meta = top_passage[1] if len(top_passage) > 1 and isinstance(top_passage[1], dict) else {}
+    raw_score = float(top_passage[2]) if len(top_passage) > 2 else 0.0
+
+    # Determine normalized evidence score in [0.0, 1.0]
+    if "reranker_score" in top_meta:
+        # CrossEncoder produces sigmoid score in [0.0, 1.0]
+        evidence_score = float(top_meta["reranker_score"])
+    elif "dense_score" in top_meta:
+        # Dense cosine similarity is in [0.0, 1.0]
+        dense_sim = float(top_meta["dense_score"])
+        # RRF theoretical max for 2 lists with k=60 is 2.0 / 61.0 ≈ 0.03278
+        rrf_norm = min(1.0, raw_score / (2.0 / 61.0))
+        evidence_score = max(dense_sim, rrf_norm)
+    else:
+        # Normalize raw RRF score to [0.0, 1.0]
+        evidence_score = min(1.0, raw_score / (2.0 / 61.0))
 
     # Check freshness for fee/deadline queries
     if intent == "fee":
         dates = [
             m.get("publication_date", "")
             for _, m, _ in reranked
-            if m.get("publication_date")
+            if isinstance(m, dict) and m.get("publication_date")
         ]
         if not dates:
             notes.append(
@@ -225,22 +241,26 @@ def evaluate_evidence(state: RAGState) -> dict[str, Any]:
             )
 
     # Check for conflicting source dates
-    all_dates = [m.get("publication_date", "") for _, m, _ in reranked if m.get("publication_date")]
+    all_dates = [
+        m.get("publication_date", "")
+        for _, m, _ in reranked
+        if isinstance(m, dict) and m.get("publication_date")
+    ]
     if len(set(all_dates)) > 1:
         notes.append(
             "Multiple source dates found; older documents may contain superseded information."
         )
 
-    sufficient = top_score >= settings.evidence_threshold
+    sufficient = evidence_score >= settings.evidence_threshold
 
     logger.info(
-        "Evidence evaluation — top_score: %.3f, threshold: %.3f, sufficient: %s",
-        top_score, settings.evidence_threshold, sufficient,
+        "Evidence evaluation — raw_score: %.4f, evidence_score: %.3f, threshold: %.3f, sufficient: %s",
+        raw_score, evidence_score, settings.evidence_threshold, sufficient,
     )
 
     return {
         "evidence_sufficient": sufficient,
-        "evidence_score": top_score,
+        "evidence_score": evidence_score,
         "evidence_notes": notes,
     }
 

@@ -238,10 +238,11 @@ class DenseIndex:
         distances = results.get("distances", [[]])[0]
         documents = results.get("documents", [[]])[0]
 
-        for meta, dist, doc_text in zip(metadatas, distances, documents):
+        for chunk_id, meta, dist, doc_text in zip(ids_list, metadatas, distances, documents):
             # ChromaDB cosine distance → similarity: sim = 1 - dist
             similarity = float(1.0 - dist)
-            meta_with_text = dict(meta)
+            meta_with_text = dict(meta) if meta else {}
+            meta_with_text["chunk_id"] = chunk_id
             meta_with_text["text"] = doc_text
             hits.append((meta_with_text, similarity))
 

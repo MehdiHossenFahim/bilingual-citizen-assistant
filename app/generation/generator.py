@@ -93,17 +93,32 @@ class AnswerGenerator:
             gen_config["thinking_level"] = "low"
 
         try:
-            interaction = client.interactions.create(
-                model=self.model,
+            from google.genai import types
+            config = types.GenerateContentConfig(
                 system_instruction=system,
-                input=user_msg,
-                generation_config=gen_config,
-                store=False,  # don't persist citizen queries
+                max_output_tokens=self.max_tokens,
+                temperature=self.temperature,
             )
-            answer = interaction.output_text or ""
+            response = client.models.generate_content(
+                model=self.model,
+                contents=user_msg,
+                config=config,
+            )
+            answer = response.text or ""
         except Exception as exc:
-            logger.error("Gemini API error: %s", exc)
-            raise
+            logger.info("generate_content failed or alternative SDK form required (%s); using interactions...", exc)
+            try:
+                interaction = client.interactions.create(
+                    model=self.model,
+                    system_instruction=system,
+                    input=user_msg,
+                    generation_config=gen_config,
+                    store=False,  # don't persist citizen queries
+                )
+                answer = interaction.output_text or ""
+            except Exception as exc2:
+                logger.error("Gemini API generation error: %s", exc2)
+                raise
 
         # Extract citations from the generated text
         citations = self._extract_citations(answer, passages)
