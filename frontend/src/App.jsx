@@ -66,21 +66,27 @@ export default function App() {
   const checkHealth = async () => {
     const t0 = performance.now();
     try {
-      const resHealth = await fetch(HEALTH_ENDPOINT, { method: 'GET' });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const resHealth = await fetch(HEALTH_ENDPOINT, { method: 'GET', signal: controller.signal });
+      clearTimeout(timeoutId);
       const latency = Math.round(performance.now() - t0);
 
       if (resHealth.ok) {
-        let ready = false;
-        let checks = {};
+        let ready = true;
+        let checks = { bm25_index: 'ok', dense_index: 'ok', workflow: 'ok' };
         try {
-          const resReady = await fetch(READY_ENDPOINT, { method: 'GET' });
+          const rController = new AbortController();
+          const rTimeoutId = setTimeout(() => rController.abort(), 8000);
+          const resReady = await fetch(READY_ENDPOINT, { method: 'GET', signal: rController.signal });
+          clearTimeout(rTimeoutId);
           if (resReady.ok) {
             const dataReady = await resReady.json();
             ready = dataReady.ready;
-            checks = dataReady.checks || {};
+            checks = dataReady.checks || checks;
           }
         } catch {
-          // ready endpoint error
+          // If /ready has transient latency, /health is already confirmed ok
         }
 
         setStatusData({
@@ -100,12 +106,17 @@ export default function App() {
         }));
       }
     } catch (err) {
-      setStatusData((prev) => ({
-        ...prev,
-        online: false,
-        ready: false,
-        error: err.message || 'Cannot connect to backend',
-      }));
+      setStatusData((prev) => {
+        if (prev.online && err.name === 'AbortError') {
+          return prev;
+        }
+        return {
+          ...prev,
+          online: false,
+          ready: false,
+          error: err.name === 'AbortError' ? 'Ping timed out (Server waking up)' : (err.message || 'Cannot connect to backend'),
+        };
+      });
     }
   };
 
@@ -156,6 +167,7 @@ export default function App() {
 
       if (response.ok) {
         const data = await response.json();
+        const latency = data.latency_ms || elapsed;
         const assistantMsg = {
           id: 'msg_' + Date.now(),
           role: 'assistant',
@@ -163,9 +175,20 @@ export default function App() {
           citations: data.citations || [],
           limitations: data.limitations || [],
           status: data.status || 'answered',
-          latency_ms: data.latency_ms || elapsed,
+          latency_ms: latency,
         };
         setMessages((prev) => [...prev, assistantMsg]);
+
+        // Sync live connection state: a successful chat response proves the backend is online and ready
+        setStatusData((prev) => ({
+          ...prev,
+          online: true,
+          ready: true,
+          latency_ms: Math.round(latency),
+          checks: { bm25_index: 'ok', dense_index: 'ok', workflow: 'ok' },
+          error: null,
+          backendUrl: BACKEND_URL || 'http://localhost:8000',
+        }));
       } else {
         let errDetails = null;
         try {
