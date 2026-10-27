@@ -42,12 +42,13 @@ huggingface_cache/
 .coverage
 htmlcov/
 
-# === IDE ===
+# === IDE & OS & Office Lock Files ===
 .vscode/
 .idea/
 *.swp
 *.swo
 .DS_Store
+~$*.docx
 Thumbs.db
 
 # === Logs ===

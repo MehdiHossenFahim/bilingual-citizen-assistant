@@ -584,6 +584,166 @@ body {
   word-break: break-all;
 }
 
+/* Enhanced Markdown Body & Elements */
+.markdown-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-main);
+}
+
+.markdown-body .msg-p {
+  margin: 0;
+  line-height: 1.65;
+  color: #1e293b;
+}
+
+.markdown-body .msg-h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 14px 0 6px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 4px;
+}
+
+.markdown-body .msg-h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 12px 0 6px;
+}
+
+.markdown-body .msg-h3 {
+  font-size: 1.0rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 10px 0 4px;
+}
+
+.markdown-body .msg-section-heading {
+  margin-top: 14px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.markdown-body .msg-section-title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: #006a4e;
+  background: #e6f4ef;
+  border-left: 3px solid #006a4e;
+  padding: 4px 10px;
+  border-radius: 0 6px 6px 0;
+  display: inline-block;
+}
+
+.markdown-body .msg-ul {
+  margin: 4px 0 8px 0;
+  padding-left: 20px;
+  list-style-type: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.markdown-body .msg-ol {
+  margin: 4px 0 8px 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.markdown-body .msg-li {
+  line-height: 1.6;
+  color: #1e293b;
+}
+
+.markdown-body .msg-strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.markdown-body .msg-italic {
+  font-style: italic;
+  color: #475569;
+}
+
+.markdown-body .msg-link {
+  color: #006a4e;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: all 0.15s ease;
+  word-break: break-all;
+}
+
+.markdown-body .msg-link:hover {
+  color: #00523c;
+  text-decoration: none;
+}
+
+.markdown-body .msg-code {
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.88em;
+  border: 1px solid #e2e8f0;
+}
+
+/* Citation Pill Badges inside Chat Bubble */
+.citation-pill-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: baseline;
+  margin: 0 4px;
+}
+
+.citation-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #006a4e;
+  background: #e6f4ef;
+  border: 1px solid rgba(0, 106, 78, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1.35;
+  text-decoration: none;
+  user-select: none;
+}
+
+.citation-pill:hover {
+  background: #006a4e;
+  color: #ffffff;
+  border-color: #006a4e;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 106, 78, 0.2);
+}
+
+.citation-pill:active {
+  transform: translateY(0);
+}
+
+/* Highlight target citation card when pill is clicked */
+.citation-card-highlighted {
+  border-color: #006a4e !important;
+  box-shadow: 0 0 0 3px rgba(0, 106, 78, 0.25) !important;
+  background: #f0fdf4 !important;
+  transition: all 0.25s ease;
+}
+
 /* Citations Section */
 .citations-wrapper {
   background: #f8fafc;

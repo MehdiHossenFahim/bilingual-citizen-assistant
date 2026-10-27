@@ -224,8 +224,12 @@ def evaluate_evidence(state: RAGState) -> dict[str, Any]:
         rrf_norm = min(1.0, raw_score / (2.0 / 61.0))
         evidence_score = max(dense_sim, rrf_norm)
     else:
-        # Normalize raw RRF score to [0.0, 1.0]
-        evidence_score = min(1.0, raw_score / (2.0 / 61.0))
+        # If raw_score is already > (2.0 / 61.0), it is already a direct [0.0, 1.0] score
+        if raw_score > (2.0 / 61.0):
+            evidence_score = min(1.0, raw_score)
+        else:
+            # Normalize raw RRF score (max ≈ 0.03278) to [0.0, 1.0]
+            evidence_score = min(1.0, raw_score / (2.0 / 61.0))
 
     # Check freshness for fee/deadline queries
     if intent == "fee":

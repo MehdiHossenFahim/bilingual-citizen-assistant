@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, ChevronDown, ChevronUp, FileText } from 'lucide-react';
+import { ExternalLink, ChevronDown, ChevronUp, FileText, Landmark, Calendar, File, Bookmark } from 'lucide-react';
 
 export default function CitationCard({ citation, index }) {
   const [expanded, setExpanded] = useState(false);
@@ -7,7 +7,7 @@ export default function CitationCard({ citation, index }) {
   const { title, authority, url, page, section, excerpt, publication_date } = citation;
 
   return (
-    <div className="citation-card">
+    <div className="citation-card" id={`citation-${index}`}>
       <div className="citation-title-row">
         <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <FileText size={15} color="#006a4e" />
@@ -24,11 +24,31 @@ export default function CitationCard({ citation, index }) {
         )}
       </div>
 
-      <div className="citation-authority">
-        {authority && <span>🏛️ {authority}</span>}
-        {publication_date && <span> • 📅 {publication_date}</span>}
-        {page && <span> • 📄 পৃষ্ঠা {page}</span>}
-        {section && <span> • 🔖 {section}</span>}
+      <div className="citation-authority" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>
+        {authority && (
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <Landmark size={13} color="#64748b" />
+            <span>{authority}</span>
+          </span>
+        )}
+        {publication_date && (
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <Calendar size={13} color="#64748b" />
+            <span>{publication_date}</span>
+          </span>
+        )}
+        {page && (
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <File size={13} color="#64748b" />
+            <span>পৃষ্ঠা {page}</span>
+          </span>
+        )}
+        {section && (
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <Bookmark size={13} color="#64748b" />
+            <span>{section}</span>
+          </span>
+        )}
       </div>
 
       {url && (

@@ -24,9 +24,9 @@ Submit a bilingual query and receive a grounded answer with citations.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `query` | string | ✅ | Question in Bangla, English, or Banglish (2–1000 chars) |
-| `language` | string | ❌ | `"bn"` \| `"en"` \| `"auto"` (default: `"auto"`) |
-| `session_id` | string | ❌ | Optional session ID for conversation continuity |
+| `query` | string | Yes | Question in Bangla, English, or Banglish (2–1000 chars) |
+| `language` | string | No | `"bn"` \| `"en"` \| `"auto"` (default: `"auto"`) |
+| `session_id` | string | No | Optional session ID for conversation continuity |
 
 **Response — 200 OK**
 
@@ -172,10 +172,10 @@ Submit optional answer feedback. Stores only a query hash (SHA-256), not the raw
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `session_id` | string | ✅ | Session identifier |
-| `query_hash` | string | ✅ | SHA-256 of the submitted query |
-| `rating` | string | ✅ | `"helpful"` \| `"not_helpful"` |
-| `comment` | string | ❌ | Optional free-text comment (max 500 chars) |
+| `session_id` | string | Yes | Session identifier |
+| `query_hash` | string | Yes | SHA-256 of the submitted query |
+| `rating` | string | Yes | `"helpful"` \| `"not_helpful"` |
+| `comment` | string | No | Optional free-text comment (max 500 chars) |
 
 **Response — 200 OK**
 

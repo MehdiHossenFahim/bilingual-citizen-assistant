@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, ArrowDown } from 'lucide-react';
+import { Send, ArrowDown, Landmark } from 'lucide-react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import ChatMessage from './components/ChatMessage';
@@ -361,7 +361,9 @@ export default function App() {
         <div className="messages-container">
           {messages.length === 0 ? (
             <div className="welcome-container">
-              <div className="welcome-icon">🏛️</div>
+              <div className="welcome-icon">
+                <Landmark size={36} color="#006a4e" />
+              </div>
               <h2 className="welcome-heading">বাংলাদেশ নাগরিক সেবা সহকারী</h2>
               <p className="welcome-subtext">
                 পাসপোর্ট, জাতীয় পরিচয়পত্র (NID) অথবা ই-টিন (TIN) সংক্রান্ত যেকোনো সরকারি সেবা সম্পর্কে নির্ভরযোগ্য নির্দেশনা পান।
@@ -369,7 +371,7 @@ export default function App() {
 
               <div style={{ width: '100%', marginTop: '16px' }}>
                 <div className="section-label" style={{ textAlign: 'center' }}>
-                  💡 উদাহরণ প্রশ্নসমূহ (সরাসরি ক্লিক করে জানতে পারেন)
+                  উদাহরণ প্রশ্নসমূহ (সরাসরি ক্লিক করে জানতে পারেন)
                 </div>
                 <ExampleQuestions onSelect={(q) => handleSendMessage(q)} />
               </div>
@@ -387,7 +389,9 @@ export default function App() {
           {/* Loading Shimmer / Typing Indicator */}
           {loading && (
             <div className="message-row assistant">
-              <div className="avatar bot-avatar">🏛️</div>
+              <div className="avatar bot-avatar">
+                <Landmark size={18} color="#006a4e" />
+              </div>
               <div className="loading-box">
                 <div className="spinner" />
                 <span>{loadingStatus || 'সরকারি তথ্য অনুসন্ধান ও উত্তর তৈরি করা হচ্ছে...'}</span>

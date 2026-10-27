@@ -77,7 +77,7 @@ def run_ingestion(docs, settings):
     dense.add_chunks(all_chunks)
     logger.info("Dense index ready: %d vectors", dense.vector_count)
 
-    logger.info("✅ Ingestion complete.")
+    logger.info("[OK] Ingestion complete.")
     return len(all_chunks)
 
 
@@ -141,7 +141,7 @@ def main():
             sys.exit(1)
 
     total = run_ingestion(docs, settings)
-    print(f"\n✅ Successfully indexed {total} chunks into the knowledge base.")
+    print(f"\n[OK] Successfully indexed {total} chunks into the knowledge base.")
 
 
 if __name__ == "__main__":

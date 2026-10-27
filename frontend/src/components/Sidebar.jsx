@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlusCircle, Globe, ShieldCheck, Activity, ChevronLeft, User } from 'lucide-react';
+import { PlusCircle, Globe, ShieldCheck, Activity, ChevronLeft, User, Landmark, BookMarked, CreditCard, Receipt } from 'lucide-react';
 
 export default function Sidebar({
   selectedLanguage,
@@ -34,7 +34,9 @@ export default function Sidebar({
     <aside className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
       <div className="sidebar-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div className="logo-badge">🏛️</div>
+          <div className="logo-badge">
+            <Landmark size={20} color="#006a4e" />
+          </div>
           <div className="sidebar-title">
             <h1>নাগরিক সেবা সহকারী</h1>
             <p>Bilingual Public Services AI</p>
@@ -74,21 +76,21 @@ export default function Sidebar({
           <div className="section-label">অন্তর্ভুক্ত সরকারি সেবা (Services)</div>
           <div className="services-list">
             <div className="service-item">
-              <span>🛂</span>
+              <BookMarked size={18} color="#006a4e" style={{ flexShrink: 0 }} />
               <div>
                 <strong>পাসপোর্ট (Passport)</strong>
                 <div style={{ fontSize: '0.72rem', color: '#64748b' }}>ই-পাসপোর্ট, নবায়ন ও ফি নির্দেশিকা</div>
               </div>
             </div>
             <div className="service-item">
-              <span>🪪</span>
+              <CreditCard size={18} color="#006a4e" style={{ flexShrink: 0 }} />
               <div>
                 <strong>জাতীয় পরিচয়পত্র (NID)</strong>
                 <div style={{ fontSize: '0.72rem', color: '#64748b' }}>সংশোধন, হারিয়ে যাওয়া ও নতুন ভোটার</div>
               </div>
             </div>
             <div className="service-item">
-              <span>📑</span>
+              <Receipt size={18} color="#006a4e" style={{ flexShrink: 0 }} />
               <div>
                 <strong>ই-টিন (e-TIN)</strong>
                 <div style={{ fontSize: '0.72rem', color: '#64748b' }}>কর সনদ নিবন্ধন ও তথ্য পুনরুদ্ধার</div>
@@ -119,7 +121,7 @@ export default function Sidebar({
             </div>
 
             <div style={{ marginTop: '8px', fontSize: '0.75rem', color: '#006a4e', fontWeight: 600 }}>
-              ডায়াগনস্টিকস ও পিং বিস্তারিত দেখুন →
+              ডায়াগনস্টিকস ও পিং বিস্তারিত দেখুন &rarr;
             </div>
           </div>
         </div>

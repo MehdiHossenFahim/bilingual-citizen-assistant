@@ -9,8 +9,12 @@ import {
   Check,
   ChevronDown,
   ChevronUp,
+  Landmark,
+  User,
+  Clock,
 } from 'lucide-react';
 import CitationCard from './CitationCard';
+import MarkdownView from './MarkdownView';
 
 export default function ChatMessage({ message, onFeedback }) {
   const {
@@ -29,47 +33,23 @@ export default function ChatMessage({ message, onFeedback }) {
 
   const isUser = role === 'user';
 
-  // Format assistant text with clean paragraph and list layout
-  const formatText = (text) => {
-    if (!text) return '';
-    const lines = text.split('\n');
-    return lines.map((line, idx) => {
-      // Heading 3
-      if (line.startsWith('### ')) {
-        return <h3 key={idx}>{line.replace('### ', '')}</h3>;
+  const handleCitationClick = (citationNumber) => {
+    setCitationsOpen(true);
+    setTimeout(() => {
+      const el = document.getElementById(`citation-${citationNumber}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        el.classList.add('citation-card-highlighted');
+        setTimeout(() => el.classList.remove('citation-card-highlighted'), 2000);
       }
-      // Heading 2
-      if (line.startsWith('## ')) {
-        return <h3 key={idx}>{line.replace('## ', '')}</h3>;
-      }
-      // Bullet items
-      if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
-        return (
-          <div key={idx} style={{ paddingLeft: '14px', marginBottom: '4px' }}>
-            • {line.trim().substring(2)}
-          </div>
-        );
-      }
-      // Numbered items
-      if (/^\d+[\.\)।]\s/.test(line.trim())) {
-        return (
-          <div key={idx} style={{ paddingLeft: '14px', marginBottom: '4px' }}>
-            {line.trim()}
-          </div>
-        );
-      }
-      if (line.trim() === '') {
-        return <div key={idx} style={{ height: '8px' }} />;
-      }
-      return <p key={idx} style={{ marginBottom: '6px' }}>{line}</p>;
-    });
+    }, 80);
   };
 
   return (
     <div className={`message-row ${role}`}>
       {!isUser && (
         <div className="avatar bot-avatar" title="Citizen Services AI">
-          🏛️
+          <Landmark size={18} color="#006a4e" />
         </div>
       )}
 
@@ -120,7 +100,9 @@ export default function ChatMessage({ message, onFeedback }) {
 
             {/* Standard Answer */}
             {status !== 'insufficient_evidence' && status !== 'error' && (
-              <div className="answer-text">{formatText(content)}</div>
+              <div className="answer-text">
+                <MarkdownView content={content} onCitationClick={handleCitationClick} />
+              </div>
             )}
 
             {/* Limitations Callout */}
@@ -159,9 +141,12 @@ export default function ChatMessage({ message, onFeedback }) {
 
             {/* Footer with Latency and Helpful/Not Helpful feedback */}
             <div className="message-meta">
-              <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 {latency_ms && (
-                  <span>⏱️ {latency_ms >= 1000 ? `${(latency_ms / 1000).toFixed(1)}s` : `${Math.round(latency_ms)}ms`}</span>
+                  <>
+                    <Clock size={12} style={{ color: '#94a3b8' }} />
+                    <span>{latency_ms >= 1000 ? `${(latency_ms / 1000).toFixed(1)}s` : `${Math.round(latency_ms)}ms`}</span>
+                  </>
                 )}
               </div>
 
@@ -191,7 +176,7 @@ export default function ChatMessage({ message, onFeedback }) {
 
       {isUser && (
         <div className="avatar user-avatar" title="You">
-          👤
+          <User size={18} color="#ffffff" />
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, Menu, PanelLeftClose, PanelLeft, ExternalLink, ShieldCheck } from 'lucide-react';
+import { Activity, Menu, PanelLeftClose, PanelLeft, ExternalLink, ShieldCheck, Landmark } from 'lucide-react';
 
 export default function Header({
   statusData,
@@ -20,7 +20,9 @@ export default function Header({
         </button>
 
         <div className="top-navbar-brand">
-          <div className="brand-badge">🏛️</div>
+          <div className="brand-badge">
+            <Landmark size={20} color="#006a4e" />
+          </div>
           <div className="brand-text">
             <div className="brand-title">
               <h1>বাংলাদেশ নাগরিক সেবা সহকারী</h1>

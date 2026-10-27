@@ -60,8 +60,9 @@ USER QUESTION:
 
 INSTRUCTIONS FOR THIS RESPONSE:
 - Synthesise only what the evidence says.
-- Structure the answer clearly (use bullet points for requirements/steps).
-- At the end, list each source as: [src-N] — <title>, <authority>, <date if known>.
+- Structure the answer cleanly with clear headings and bullet points (- item) for requirements and steps.
+- Cite each factual claim inline with [src-N] markers (e.g. [src-1] or [src-2]).
+- Do NOT append a separate sources list or bibliography at the bottom (interactive citation cards are displayed automatically).
 - If the evidence is from a specific page, mention it: e.g., "According to [src-1] (Page 3)..."
 - If no passage directly answers the question, say so rather than guessing.
 """

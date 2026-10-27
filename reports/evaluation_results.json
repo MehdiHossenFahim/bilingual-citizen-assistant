@@ -1,0 +1,998 @@
+{
+  "summary": {
+    "total_questions": 45,
+    "status_accuracy": 0.844,
+    "keyword_recall": 0.766,
+    "citation_rate": 1.125,
+    "median_latency_ms": 6954.2,
+    "p90_latency_ms": 44559.6,
+    "targets": {
+      "status_accuracy": ">= 0.95",
+      "keyword_recall": ">= 0.85",
+      "citation_rate": ">= 0.95",
+      "median_latency_ms": "<= 10000"
+    }
+  },
+  "results": [
+    {
+      "id": "P-EN-001",
+      "query": "What documents are needed to apply for a new passport in Bangladesh?",
+      "language": "en",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "NID",
+        "application form",
+        "photograph",
+        "fee"
+      ],
+      "keywords_expected": [
+        "NID",
+        "application form",
+        "photograph",
+        "fee"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 10246.5,
+      "answer_preview": "To apply for a new passport in Bangladesh, the required documents and process depend on the type of passport and the applicant's age. Please note that processing times and requirements are subject to "
+    },
+    {
+      "id": "P-EN-002",
+      "query": "How much does a Bangladesh passport cost?",
+      "language": "en",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.333,
+      "keywords_found": [
+        "fee"
+      ],
+      "keywords_expected": [
+        "BDT",
+        "3,000",
+        "fee"
+      ],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 6163.6,
+      "answer_preview": "The provided documents do not specify the exact monetary cost of a Bangladesh passport. \n\nAccording to [src-2], the fees for a passport differ based on the validity period chosen (5 or 10 years) at th"
+    },
+    {
+      "id": "P-EN-003",
+      "query": "How do I renew my Bangladesh passport?",
+      "language": "en",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.333,
+      "keywords_found": [
+        "existing passport"
+      ],
+      "keywords_expected": [
+        "existing passport",
+        "online",
+        "NID"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 7624.2,
+      "answer_preview": "Based on the provided documents, there is no specific information regarding the \"renewal\" process for a Bangladesh passport. The available evidence only provides information on the following aspects o"
+    },
+    {
+      "id": "P-EN-004",
+      "query": "What is the processing time for emergency passport?",
+      "language": "en",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "7 working days",
+        "emergency"
+      ],
+      "keywords_expected": [
+        "7 working days",
+        "emergency"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 7257.5,
+      "answer_preview": "The processing time for an emergency passport in Bangladesh is 7 working days [src-1], [src-3].\n\nPlease note that these timeframes are targets, and actual processing times may vary [src-1]. As of the "
+    },
+    {
+      "id": "P-EN-005",
+      "query": "Can I apply for a passport without NID?",
+      "language": "en",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "birth registration",
+        "under 20"
+      ],
+      "keywords_expected": [
+        "birth registration",
+        "under 20"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 3531.0,
+      "answer_preview": "Whether you can apply for a passport without a National Identity (NID) card depends on your age:\n\n*   **Citizens under 20 years old:** You may use a Birth Registration Certificate instead of an NID [s"
+    },
+    {
+      "id": "P-EN-006",
+      "query": "What documents does a minor need for a passport?",
+      "language": "en",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.667,
+      "keywords_found": [
+        "birth registration",
+        "parent"
+      ],
+      "keywords_expected": [
+        "birth registration",
+        "parent",
+        "guardian"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 5547.1,
+      "answer_preview": "To apply for a passport for a minor (under 18), the following requirements and procedures apply based on the provided documents:\n\n**Required Documents**\n*   **Completed Online Application Form:** This"
+    },
+    {
+      "id": "P-EN-007",
+      "query": "How do I track my passport application status?",
+      "language": "en",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "epassport.gov.bd",
+        "application ID"
+      ],
+      "keywords_expected": [
+        "epassport.gov.bd",
+        "application ID"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 11491.7,
+      "answer_preview": "To track the status of your passport application, you may follow these steps:\n\n*   Visit the official website at https://www.epassport.gov.bd [src-1], [src-5].\n*   Use your application ID to check the"
+    },
+    {
+      "id": "P-EN-008",
+      "query": "What is the validity period of a Bangladesh e-passport?",
+      "language": "en",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "5",
+        "10",
+        "year"
+      ],
+      "keywords_expected": [
+        "5",
+        "10",
+        "year"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 7647.1,
+      "answer_preview": "Bangladesh e-passports are issued with a validity period of either 5 years or 10 years [src-1]. You must select your preferred validity period at the time of your application [src-1].\n\nPlease note tha"
+    },
+    {
+      "id": "P-BN-001",
+      "query": "পাসপোর্ট করতে কী কী কাগজ লাগে?",
+      "language": "bn",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "NID",
+        "আবেদন ফর্ম",
+        "ছবি"
+      ],
+      "keywords_expected": [
+        "NID",
+        "আবেদন ফর্ম",
+        "ছবি"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 7285.8,
+      "answer_preview": "নতুন পাসপোর্টের জন্য আবেদনের ক্ষেত্রে প্রয়োজনীয় কাগজপত্র ও তথ্যাবলি নিচে দেওয়া হলো:\n\n*   **অনলাইন আবেদন ফর্ম:** www.epassport.gov.bd ওয়েবসাইট থেকে আবেদন ফর্মটি পূরণ করতে হবে [src-1]।\n*   **জাতীয় পরিচ"
+    },
+    {
+      "id": "P-BN-002",
+      "query": "পাসপোর্ট নবায়ন করতে কী কী কাগজ লাগে?",
+      "language": "bn",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "পাসপোর্ট",
+        "NID",
+        "ফি"
+      ],
+      "keywords_expected": [
+        "পাসপোর্ট",
+        "NID",
+        "ফি"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 5145.7,
+      "answer_preview": "পাসপোর্ট নবায়ন বা নতুন পাসপোর্টের আবেদনের জন্য প্রয়োজনীয় কাগজপত্র নিচে দেওয়া হলো:\n\n*   অনলাইন আবেদন ফর্ম (www.epassport.gov.bd ওয়েবসাইট থেকে পূরণ করতে হবে) [src-1]।\n*   জাতীয় পরিচয়পত্র (NID) — মূল "
+    },
+    {
+      "id": "P-BN-003",
+      "query": "পাসপোর্টের ফি কত?",
+      "language": "bn",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "টাকা",
+        "৩,০০০",
+        "ফি"
+      ],
+      "keywords_expected": [
+        "টাকা",
+        "৩,০০০",
+        "ফি"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 6409.9,
+      "answer_preview": "পাসপোর্টের ফি আবেদনের ধরন এবং মেয়াদের ওপর ভিত্তি করে ভিন্ন হয়। নিচে প্রাপ্ত তথ্যের ভিত্তিতে ফি-এর তালিকা দেওয়া হলো:\n\n**৫ বছর মেয়াদী ই-পাসপোর্টের ফি:**\n*   **সাধারণ (২১ কার্যদিবস):** ৪৮ পাতা — ৩,০০০ টা"
+    },
+    {
+      "id": "P-BN-004",
+      "query": "জরুরি পাসপোর্ট পেতে কত সময় লাগে?",
+      "language": "bn",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "৭ কার্যদিবস",
+        "জরুরি"
+      ],
+      "keywords_expected": [
+        "৭ কার্যদিবস",
+        "জরুরি"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 117750.1,
+      "answer_preview": "জরুরি পাসপোর্ট পাওয়ার জন্য নির্ধারিত সময়সীমা সম্পর্কে তথ্য নিচে দেওয়া হলো:\n\nইমিগ্রেশন ও পাসপোর্ট অধিদপ্তরের তথ্য অনুযায়ী, জরুরি পাসপোর্ট পাওয়ার জন্য ৭ কার্যদিবস সময় লাগে [src-1], [src-2]।\n\nতথ্যসূত্র:\n"
+    },
+    {
+      "id": "P-BN-005",
+      "query": "শিশুদের পাসপোর্টের জন্য কী কী লাগে?",
+      "language": "bn",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_expected": [
+        "জন্ম নিবন্ধন",
+        "অভিভাবক"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 4951.9,
+      "answer_preview": "শিশুদের পাসপোর্টের আবেদনের জন্য প্রয়োজনীয় তথ্যাবলি নিচে দেওয়া হলো:\n\n**প্রয়োজনীয় কাগজপত্র:**\nইমিগ্রেশন ও পাসপোর্ট অধিদপ্তরের তথ্য অনুযায়ী, নতুন পাসপোর্টের আবেদনের জন্য নিম্নলিখিত কাগজপত্র প্রয়োজন [src-"
+    },
+    {
+      "id": "P-BL-001",
+      "query": "Passport korte ki ki documents lagbe?",
+      "language": "banglish",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.667,
+      "keywords_found": [
+        "NID",
+        "application"
+      ],
+      "keywords_expected": [
+        "NID",
+        "application",
+        "document"
+      ],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 3850.5,
+      "answer_preview": "পাসপোর্ট করার জন্য প্রয়োজনীয় নথিপত্র নিচে দেওয়া হলো:\n\n**ই-পাসপোর্টের (e-Passport) জন্য প্রয়োজনীয় নথিপত্র:**\nপাসপোর্ট অফিসে বায়োমেট্রিক প্রদানের সময় আপনাকে নিচের নথিপত্রগুলো সাথে রাখতে হবে:\n*   জাতীয় "
+    },
+    {
+      "id": "P-BL-002",
+      "query": "Passport renewal fee koto?",
+      "language": "banglish",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "BDT",
+        "fee",
+        "3,000"
+      ],
+      "keywords_expected": [
+        "BDT",
+        "fee",
+        "3,000"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 3861.8,
+      "answer_preview": "The renewal fee for a Machine Readable Passport (MRP) follows the same schedule as new applications [src-1]. As of January 1, 2024, the fees are as follows:\n\n**Regular Processing (21 working days):**\n"
+    },
+    {
+      "id": "P-BL-003",
+      "query": "Emergency passport koto dine paoa jai?",
+      "language": "banglish",
+      "category": "passport",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "7",
+        "working days"
+      ],
+      "keywords_expected": [
+        "7",
+        "working days"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 239800.9,
+      "answer_preview": "According to the Department of Immigration and Passports, an emergency passport is targeted to be processed in 7 working days [src-1].\n\nPlease note that these are target timelines, and actual processi"
+    },
+    {
+      "id": "N-EN-001",
+      "query": "How do I apply for NID correction in Bangladesh?",
+      "language": "en",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "services.nidw.gov.bd",
+        "correction",
+        "NID"
+      ],
+      "keywords_expected": [
+        "services.nidw.gov.bd",
+        "correction",
+        "NID"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 5089.0,
+      "answer_preview": "To apply for a correction to your National Identity Card (NID) in Bangladesh, you should follow these steps as outlined by the Bangladesh Election Commission:\n\n*   **Access the Portal:** Visit the off"
+    },
+    {
+      "id": "N-EN-002",
+      "query": "What documents are needed for NID name correction?",
+      "language": "en",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "birth registration",
+        "SSC",
+        "affidavit"
+      ],
+      "keywords_expected": [
+        "birth registration",
+        "SSC",
+        "affidavit"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 7532.3,
+      "answer_preview": "To correct your name on your National ID (NID) card, you must submit a correction request with the following supporting documents:\n\n*   Original NID card [src-1]\n*   Original birth registration certif"
+    },
+    {
+      "id": "N-EN-003",
+      "query": "What is the fee for NID correction?",
+      "language": "en",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "230",
+        "BDT",
+        "fee"
+      ],
+      "keywords_expected": [
+        "230",
+        "BDT",
+        "fee"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 3331.5,
+      "answer_preview": "According to the provided documents, the fee for NID correction is BDT 230 [src-5]. \n\nPlease note the following regarding this fee:\n*   This fee is based on the current schedule as of July 1, 2023; yo"
+    },
+    {
+      "id": "N-EN-004",
+      "query": "My NID card is lost. How do I get a replacement?",
+      "language": "en",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "General Diary",
+        "GD",
+        "police",
+        "replacement"
+      ],
+      "keywords_expected": [
+        "General Diary",
+        "GD",
+        "police",
+        "replacement"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 17131.4,
+      "answer_preview": "To obtain a replacement for a lost NID card, please follow these steps as outlined by the Bangladesh Election Commission:\n\n*   **File a General Diary (GD):** You must first file a General Diary (GD) a"
+    },
+    {
+      "id": "N-EN-005",
+      "query": "How long does NID correction take?",
+      "language": "en",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "15",
+        "30",
+        "working days"
+      ],
+      "keywords_expected": [
+        "15",
+        "30",
+        "working days"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 8886.2,
+      "answer_preview": "According to the provided documents, the processing time for an NID correction is generally 15–30 working days [src-3]. Please note that complex corrections may take longer than this timeframe [src-3]"
+    },
+    {
+      "id": "N-EN-006",
+      "query": "How do I update my address on my NID card?",
+      "language": "en",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.333,
+      "keywords_found": [
+        "address"
+      ],
+      "keywords_expected": [
+        "utility bill",
+        "electricity",
+        "address"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 47275.0,
+      "answer_preview": "Based on the provided documents, there is no specific information detailing the exact steps to update an address on your NID card. \n\nHowever, the available evidence provides the following general guid"
+    },
+    {
+      "id": "N-BN-001",
+      "query": "জাতীয় পরিচয়পত্র সংশোধন করতে কী করতে হবে?",
+      "language": "bn",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "services.nidw.gov.bd",
+        "সংশোধন"
+      ],
+      "keywords_expected": [
+        "services.nidw.gov.bd",
+        "সংশোধন"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 44559.6,
+      "answer_preview": "জাতীয় পরিচয়পত্র (NID) সংশোধনের জন্য আপনাকে নিম্নোক্ত ধাপগুলো অনুসরণ করতে হবে:\n\n**আবেদনের পদ্ধতি:**\n১. প্রথমে NID সেবা পোর্টালে (https://services.nidw.gov.bd) প্রবেশ করুন [src-1]।\n২. আপনার NID নম্বর "
+    },
+    {
+      "id": "N-BN-002",
+      "query": "NID কার্ডে নাম সংশোধনের জন্য কী কী লাগে?",
+      "language": "bn",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "জন্ম নিবন্ধন",
+        "সনদ",
+        "হলফনামা"
+      ],
+      "keywords_expected": [
+        "জন্ম নিবন্ধন",
+        "সনদ",
+        "হলফনামা"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 3867.4,
+      "answer_preview": "জাতীয় পরিচয়পত্র (NID) কার্ডে নাম সংশোধনের জন্য প্রয়োজনীয় কাগজপত্র নিচে দেওয়া হলো:\n\n*   মূল NID কার্ড [src-1]\n*   জন্ম নিবন্ধন সনদ [src-1]\n*   এসএসসি (SSC) বা সমমানের সনদপত্র [src-1]\n*   হলফনামা (প"
+    },
+    {
+      "id": "N-BN-003",
+      "query": "NID কার্ড হারিয়ে গেলে কী করব?",
+      "language": "bn",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_expected": [
+        "জিডি",
+        "পুলিশ",
+        "পুনর্মুদ্রণ"
+      ],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 7961.7,
+      "answer_preview": "আপনার প্রশ্ন অনুযায়ী, জাতীয় পরিচয়পত্র (NID) হারিয়ে গেলে কী করতে হবে সে বিষয়ে প্রদত্ত তথ্যাবলিতে কোনো সরাসরি নির্দেশনা নেই। প্রদত্ত নথিপত্রগুলোতে শুধুমাত্র তথ্য সংশোধনের প্রক্রিয়া এবং সাধারণ জিজ্ঞাসার "
+    },
+    {
+      "id": "N-BL-001",
+      "query": "NID correction er jonno ki ki documents lagbe?",
+      "language": "banglish",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.667,
+      "keywords_found": [
+        "NID",
+        "SSC"
+      ],
+      "keywords_expected": [
+        "NID",
+        "birth registration",
+        "SSC"
+      ],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 10062.0,
+      "answer_preview": "আপনার জাতীয় পরিচয়পত্র (NID) সংশোধনের জন্য প্রয়োজনীয় নথিপত্র নিচে দেওয়া হলো:\n\n**সাধারণ প্রয়োজনীয় নথিপত্র:**\n*   মূল জাতীয় পরিচয়পত্র (NID) [src-1, src-3].\n\n**নাম সংশোধনের জন্য:**\n*   জন্ম নিবন্ধন সনদ (ম"
+    },
+    {
+      "id": "N-BL-002",
+      "query": "NID card hariye gele ki korbo?",
+      "language": "banglish",
+      "category": "nid",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.667,
+      "keywords_found": [
+        "GD",
+        "replacement"
+      ],
+      "keywords_expected": [
+        "GD",
+        "police",
+        "replacement"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 4145.9,
+      "answer_preview": "আপনার এনআইডি (NID) কার্ড হারিয়ে গেলে আপনি নিচের পদক্ষেপগুলো অনুসরণ করে প্রতিস্থাপনের (replacement) জন্য আবেদন করতে পারেন:\n\n*   **সাধারণ ডায়েরি (GD):** নিকটস্থ থানায় গিয়ে আপনার হারিয়ে যাওয়া কার্ডের জন্"
+    },
+    {
+      "id": "T-EN-001",
+      "query": "How do I register for a TIN in Bangladesh?",
+      "language": "en",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "NBR",
+        "e-TIN",
+        "NID",
+        "portal"
+      ],
+      "keywords_expected": [
+        "NBR",
+        "e-TIN",
+        "NID",
+        "portal"
+      ],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 6954.2,
+      "answer_preview": "To register for an e-TIN in Bangladesh, you can follow these steps according to the National Board of Revenue (NBR):\n\n*   **Visit the Portal:** Go to the official NBR e-TIN portal at https://secure.in"
+    },
+    {
+      "id": "T-EN-002",
+      "query": "Is TIN registration free in Bangladesh?",
+      "language": "en",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "free",
+        "no fee"
+      ],
+      "keywords_expected": [
+        "free",
+        "no fee"
+      ],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 15457.4,
+      "answer_preview": "Yes, e-TIN registration in Bangladesh is free of charge [src-1, src-2, src-4]. There is no fee required for the initial registration process [src-2, src-4].\n\n**Key Information Regarding e-TIN:**\n*   *"
+    },
+    {
+      "id": "T-EN-003",
+      "query": "What documents do I need to get a TIN certificate?",
+      "language": "en",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_expected": [
+        "NID",
+        "mobile number",
+        "address"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 3796.0,
+      "answer_preview": "Based on the provided evidence, there is no specific list of documents required to register for a TIN certificate. The provided documents state that e-TIN registration is free of charge and can be com"
+    },
+    {
+      "id": "T-EN-004",
+      "query": "How do I file income tax return in Bangladesh?",
+      "language": "en",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "etaxnbr.gov.bd",
+        "return",
+        "November"
+      ],
+      "keywords_expected": [
+        "etaxnbr.gov.bd",
+        "return",
+        "November"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 4897.4,
+      "answer_preview": "Individual taxpayers in Bangladesh can file their income tax returns online through the National Board of Revenue (NBR) e-Return portal [src-2].\n\n### Steps to file an e-Return:\n1. **Access the Portal:"
+    },
+    {
+      "id": "T-EN-005",
+      "query": "What is the tax-free income threshold in Bangladesh?",
+      "language": "en",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "3,50,000",
+        "BDT",
+        "threshold"
+      ],
+      "keywords_expected": [
+        "3,50,000",
+        "BDT",
+        "threshold"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 4331.0,
+      "answer_preview": "According to the National Board of Revenue (NBR) for the 2023-24 fiscal year, the tax-free income thresholds are as follows [src-2]:\n\n*   **General taxpayers:** BDT 3,50,000 per year [src-2]\n*   **Wom"
+    },
+    {
+      "id": "T-EN-006",
+      "query": "I lost my TIN certificate. How do I get a new one?",
+      "language": "en",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "download",
+        "portal",
+        "online"
+      ],
+      "keywords_expected": [
+        "download",
+        "portal",
+        "online"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 4647.3,
+      "answer_preview": "If you have lost your TIN certificate, you can obtain a new one by following these steps:\n\n*   **Access the Portal:** Log in to the official National Board of Revenue (NBR) portal at https://secure.in"
+    },
+    {
+      "id": "T-BN-001",
+      "query": "টিআইএন নিবন্ধন কীভাবে করব?",
+      "language": "bn",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 1.0,
+      "keywords_found": [
+        "NBR",
+        "পোর্টাল",
+        "NID"
+      ],
+      "keywords_expected": [
+        "NBR",
+        "পোর্টাল",
+        "NID"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 13097.6,
+      "answer_preview": "ই-টিন (TIN) নিবন্ধন করার পদ্ধতি নিচে দেওয়া হলো:\n\n**নিবন্ধনের জন্য প্রয়োজনীয় তথ্য:**\n*   জাতীয় পরিচয়পত্র (NID) নম্বর অথবা পাসপোর্ট নম্বর (যদি NID না থাকে) [src-1], [src-2]।\n*   মোবাইল নম্বর (OTP যাচা"
+    },
+    {
+      "id": "T-BN-002",
+      "query": "ই-টিন করতে কত টাকা লাগে?",
+      "language": "bn",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.5,
+      "keywords_found": [
+        "বিনামূল্যে"
+      ],
+      "keywords_expected": [
+        "বিনামূল্যে",
+        "ফি নেই"
+      ],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 5792.1,
+      "answer_preview": "ই-টিন (TIN) নিবন্ধন করতে কোনো টাকা লাগে না। এটি সম্পূর্ণ বিনামূল্যে করা যায় [src-1]।\n\nই-টিন নিবন্ধনের জন্য প্রয়োজনীয় তথ্য ও পদ্ধতি নিচে দেওয়া হলো:\n\n**প্রয়োজনীয় তথ্য:**\n*   জাতীয় পরিচয়পত্র (NID) নম্ব"
+    },
+    {
+      "id": "T-BN-003",
+      "query": "TIN certificate কী কাজে লাগে?",
+      "language": "bn",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.667,
+      "keywords_found": [
+        "ব্যবসা",
+        "ব্যাংক"
+      ],
+      "keywords_expected": [
+        "আয়কর",
+        "ব্যবসা",
+        "ব্যাংক"
+      ],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 5512.7,
+      "answer_preview": "TIN (Taxpayer Identification Number) সার্টিফিকেট বিভিন্ন সরকারি ও দাপ্তরিক কাজে ব্যবহৃত হয়। প্রাপ্ত তথ্য অনুযায়ী এর ব্যবহার ও প্রয়োজনীয়তা নিচে দেওয়া হলো:\n\n*   **বিভিন্ন দাপ্তরিক কাজ:** ১২-সংখ্যার ই-টি"
+    },
+    {
+      "id": "T-BL-001",
+      "query": "TIN certificate korte ki ki documents lagbe?",
+      "language": "banglish",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_expected": [
+        "NID",
+        "mobile",
+        "address"
+      ],
+      "citation_count": 3,
+      "has_citation": true,
+      "latency_ms": 2884.8,
+      "answer_preview": "আপনার প্রশ্নের উত্তরে জানানো যাচ্ছে যে, প্রদত্ত তথ্যের মধ্যে টিআইএন (TIN) সার্টিফিকেট করার জন্য প্রয়োজনীয় নথিপত্রের কোনো তালিকা উল্লেখ নেই।\n\nতবে টিআইএন সংক্রান্ত কিছু সাধারণ তথ্য নিচে দেওয়া হলো:\n*   এ"
+    },
+    {
+      "id": "T-BL-002",
+      "query": "E-TIN registration ki free?",
+      "language": "banglish",
+      "category": "tin",
+      "expected_status": "answered",
+      "actual_status": "answered",
+      "status_ok": true,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_expected": [
+        "free",
+        "no fee"
+      ],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 2932.8,
+      "answer_preview": "হ্যাঁ, ই-টিন (e-TIN) রেজিস্ট্রেশন সম্পূর্ণ ফ্রি। ন্যাশনাল বোর্ড অব রেভিনিউ (NBR)-এর পোর্টালে প্রাথমিক রেজিস্ট্রেশনের জন্য কোনো ফি নেওয়া হয় না [src-1], [src-2], [src-3]।\n\nই-টিন রেজিস্ট্রেশন সম্পর্কে কি"
+    },
+    {
+      "id": "OOD-001",
+      "query": "What is the best stock to buy in Bangladesh right now?",
+      "language": "en",
+      "category": "out_of_domain",
+      "expected_status": "insufficient_evidence",
+      "actual_status": "answered",
+      "status_ok": false,
+      "keyword_recall": 1.0,
+      "keywords_found": [],
+      "keywords_expected": [],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 5290.6,
+      "answer_preview": "The provided evidence does not contain information regarding stock market recommendations or advice on which stocks to buy in Bangladesh.\n\n[src-1] — TIN/e-TIN FAQ — Frequently Asked Questions, Nationa"
+    },
+    {
+      "id": "OOD-002",
+      "query": "আমার ভিসা আবেদন কি অনুমোদিত হবে?",
+      "language": "bn",
+      "category": "out_of_domain",
+      "expected_status": "insufficient_evidence",
+      "actual_status": "answered",
+      "status_ok": false,
+      "keyword_recall": 1.0,
+      "keywords_found": [],
+      "keywords_expected": [],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 35684.0,
+      "answer_preview": "আপনার ভিসা আবেদন অনুমোদিত হবে কি না, সে বিষয়ে প্রদত্ত তথ্যে কোনো উল্লেখ নেই। প্রদত্ত নথিপত্রগুলো মূলত পাসপোর্ট আবেদন এবং জাতীয় পরিচয়পত্র সংশোধনের প্রক্রিয়ার সাথে সম্পর্কিত।\n\nপাসপোর্ট আবেদনের জন্য প্রয়"
+    },
+    {
+      "id": "OOD-003",
+      "query": "Who is the Prime Minister of Bangladesh?",
+      "language": "en",
+      "category": "out_of_domain",
+      "expected_status": "insufficient_evidence",
+      "actual_status": "answered",
+      "status_ok": false,
+      "keyword_recall": 1.0,
+      "keywords_found": [],
+      "keywords_expected": [],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 69289.8,
+      "answer_preview": "The provided evidence does not contain information regarding the identity of the Prime Minister of Bangladesh.\n\n***\n\n**Sources:**\n[src-1] — National ID Card (NID) — Correction of Information, Banglade"
+    },
+    {
+      "id": "OOD-004",
+      "query": "Can you write a Python script for me?",
+      "language": "en",
+      "category": "out_of_domain",
+      "expected_status": "insufficient_evidence",
+      "actual_status": "answered",
+      "status_ok": false,
+      "keyword_recall": 1.0,
+      "keywords_found": [],
+      "keywords_expected": [],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 4234.5,
+      "answer_preview": "The provided evidence does not contain information regarding the creation of Python scripts. Therefore, I cannot fulfill this request based on the available documents.\n\n***\n\n**Sources:**\n*   [src-1] —"
+    },
+    {
+      "id": "OOD-005",
+      "query": "What are the requirements for a US visa?",
+      "language": "en",
+      "category": "out_of_domain",
+      "expected_status": "insufficient_evidence",
+      "actual_status": "answered",
+      "status_ok": false,
+      "keyword_recall": 1.0,
+      "keywords_found": [],
+      "keywords_expected": [],
+      "citation_count": 5,
+      "has_citation": true,
+      "latency_ms": 10719.2,
+      "answer_preview": "The provided evidence does not contain information regarding the requirements for a US visa. The documents provided relate exclusively to the application process for a Bangladesh Machine Readable Pass"
+    },
+    {
+      "id": "AMB-001",
+      "query": "I need to change something on my document.",
+      "language": "en",
+      "category": "general",
+      "expected_status": "insufficient_evidence",
+      "actual_status": "answered",
+      "status_ok": false,
+      "keyword_recall": 1.0,
+      "keywords_found": [],
+      "keywords_expected": [],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 9623.2,
+      "answer_preview": "To correct information on your National Identity Card (NID), you may follow the process outlined by the Bangladesh Election Commission. Please note that this information is based on data from July 1, "
+    },
+    {
+      "id": "AMB-002",
+      "query": "আমার কার্ড নষ্ট হয়ে গেছে।",
+      "language": "bn",
+      "category": "general",
+      "expected_status": "insufficient_evidence",
+      "actual_status": "answered",
+      "status_ok": false,
+      "keyword_recall": 1.0,
+      "keywords_found": [],
+      "keywords_expected": [],
+      "citation_count": 4,
+      "has_citation": true,
+      "latency_ms": 14493.4,
+      "answer_preview": "আপনার জাতীয় পরিচয়পত্র (NID) নষ্ট হয়ে গেলে তা পুনরায় পাওয়ার জন্য নিচের পদক্ষেপগুলো অনুসরণ করতে পারেন:\n\n**নষ্ট কার্ডের জন্য আবেদন প্রক্রিয়া:**\n১. এনআইডি সেবা পোর্টালে (https://services.nidw.gov.bd"
+    }
+  ]
+}

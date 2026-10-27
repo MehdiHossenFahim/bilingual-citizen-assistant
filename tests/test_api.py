@@ -11,6 +11,7 @@ import pytest
 from unittest.mock import MagicMock, patch
 
 os.environ.setdefault("GEMINI_API_KEY", "test-api-key-not-real")
+os.environ["TESTING"] = "1"
 
 from fastapi.testclient import TestClient
 

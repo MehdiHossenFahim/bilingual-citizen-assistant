@@ -14,6 +14,7 @@ Startup sequence:
 from __future__ import annotations
 
 import logging
+import os
 import sys
 import time
 from contextlib import asynccontextmanager
@@ -50,6 +51,10 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Initialise all heavyweight resources once at startup."""
+    import os
+    if os.environ.get("TESTING") == "1":
+        yield
+        return
     settings = get_settings()
     logger.info("Starting Bilingual Citizen Services AI Assistant…")
 
@@ -151,12 +156,13 @@ def create_app() -> FastAPI:
     )
 
     # Rate Limiting (protect LLM / compute resources)
-    from app.api.rate_limiter import RateLimitMiddleware
-    app.add_middleware(
-        RateLimitMiddleware,
-        max_requests=settings.rate_limit_requests,
-        window_seconds=settings.rate_limit_period,
-    )
+    if os.environ.get("TESTING") != "1":
+        from app.api.rate_limiter import RateLimitMiddleware
+        app.add_middleware(
+            RateLimitMiddleware,
+            max_requests=settings.rate_limit_requests,
+            window_seconds=settings.rate_limit_period,
+        )
 
     # ---- Routers ----
     app.include_router(chat_router.router, prefix="/api/v1", tags=["Chat"])

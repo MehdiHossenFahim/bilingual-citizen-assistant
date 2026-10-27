@@ -1,4 +1,4 @@
-# 🏛️ Bilingual Citizen Services AI Assistant
+# Bilingual Citizen Services AI Assistant
 
 **Ask in your language. Get understandable guidance. Check the official source.**
 
@@ -14,26 +14,26 @@ A production-grade, Agentic RAG-powered AI assistant for Bangladesh government p
 
 ---
 
-## ✨ Key Capabilities
+## Key Capabilities
 
 | Capability | Technical Implementation |
 |---|---|
-| 🌐 **Bilingual Natural Language** | Native Bengali (বাংলা) & English semantic comprehension with Banglish transliteration support. |
-| 📚 **Hybrid Retrieval (RAG)** | Dual-engine search: BM25 lexical keyword matching + ChromaDB dense semantic vector search. |
-| ⚖️ **Reciprocal Rank Fusion (RRF)** | Rank-based fusion ($k=60$) combining sparse keyword hits and semantic dense embeddings without score calibration mismatch. |
-| 🔗 **Strict Grounding & Citations** | Every administrative claim is strictly tied to an official citation `[src-X]` with portal title, authority, and official URL. |
-| 🛡️ **Anti-Hallucination Safe Fallback** | Deterministic evidence thresholding ($\ge 0.40$ normalized score). Politely refuses out-of-scope or unverified queries. |
-| 🔄 **LangGraph Decision Machine** | Cyclic/conditional 5-node graph: `analyze_query` → `retrieve` → `evaluate_evidence` → `generate_answer` / `fallback`. |
-| ⚡ **Resilient Cloud Architecture** | Zero-RAM cloud embedding mode (`gemini-embedding-001`) with edge proxy rewrites running seamlessly within free-tier resource limits. |
+| **Bilingual Natural Language** | Native Bengali (বাংলা) & English semantic comprehension with Banglish transliteration support. |
+| **Hybrid Retrieval (RAG)** | Dual-engine search: BM25 lexical keyword matching + ChromaDB dense semantic vector search. |
+| **Reciprocal Rank Fusion (RRF)** | Rank-based fusion ($k=60$) combining sparse keyword hits and semantic dense embeddings without score calibration mismatch. |
+| **Strict Grounding & Citations** | Every administrative claim is strictly tied to an official citation `[src-X]` with portal title, authority, and official URL. |
+| **Anti-Hallucination Safe Fallback** | Deterministic evidence thresholding ($\ge 0.40$ normalized score). Politely refuses out-of-scope or unverified queries. |
+| **LangGraph Decision Machine** | Cyclic/conditional 5-node graph: `analyze_query` -> `retrieve` -> `evaluate_evidence` -> `generate_answer` / `fallback`. |
+| **Resilient Cloud Architecture** | Zero-RAM cloud embedding mode (`gemini-embedding-001`) with edge proxy rewrites running seamlessly within free-tier resource limits. |
 
 **Covered Services:**
-- 🛂 **Passport (ই-পাসপোর্ট / পাসপোর্ট):** Issuance fees, application requirements, renewal rules, police verification, delivery timelines (DIP).
-- 🪪 **NID (জাতীয় পরিচয়পত্র):** Smart NID eligibility, voter registration, online corrections, lost card re-issuance (EC NID Wing).
-- 📑 **e-TIN (করদাতা শনাক্তকারী নম্বর):** Online registration, tax zone determination, mandatory return filing criteria (NBR).
+- **Passport (ই-পাসপোর্ট / পাসপোর্ট):** Issuance fees, application requirements, renewal rules, police verification, delivery timelines (DIP).
+- **NID (জাতীয় পরিচয়পত্র):** Smart NID eligibility, voter registration, online corrections, lost card re-issuance (EC NID Wing).
+- **e-TIN (করদাতা শনাক্তকারী নম্বর):** Online registration, tax zone determination, mandatory return filing criteria (NBR).
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 The application is architected as a decoupled, cloud-ready client-server system with an Edge Reverse Proxy on Vercel and an asynchronous FastAPI + LangGraph core on Render:
 
@@ -81,7 +81,7 @@ flowchart TD
 
 ---
 
-## 🔄 How Data is Fetched & Processed
+## How Data is Fetched & Processed
 
 The system operates across two decoupled lifecycles: **Offline Document Ingestion** (how administrative data is acquired and indexed) and **Online Query-Time Retrieval** (how relevant passages are fetched and cited during user conversation).
 
@@ -170,7 +170,7 @@ flowchart TD
 
 ---
 
-## 🚀 Quick Start Guide
+## Quick Start Guide
 
 ### Prerequisites
 
@@ -240,7 +240,7 @@ Open your browser at `http://localhost:5173`.
 
 ---
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 The complete application is containerized with Docker Compose:
 
@@ -255,7 +255,7 @@ docker compose up --build
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 ### `POST /api/v1/chat`
 
@@ -299,7 +299,7 @@ curl -X POST https://bilingual-citizen-assistant.onrender.com/api/v1/chat \
 
 ---
 
-## 🧪 Automated Testing & Evaluation
+## Automated Testing & Evaluation
 
 The repository includes a comprehensive unit, integration, and quantitative evaluation suite:
 
@@ -326,7 +326,7 @@ Evaluates the assistant across 40+ audited test cases covering:
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 bilingual-citizen-assistant/
@@ -393,7 +393,7 @@ bilingual-citizen-assistant/
 
 ---
 
-## ⚙️ Configuration Parameters
+## Configuration Parameters
 
 All system configurations can be set via `.env`:
 
@@ -412,7 +412,7 @@ All system configurations can be set via `.env`:
 
 ---
 
-## ⚠️ Important Disclaimers
+## Important Disclaimers
 
 1. **Non-Governmental System:** This application is an educational AI research project and does **not** officially represent any department of the Government of the People's Republic of Bangladesh.
 2. **Advisory Nature:** Information provided is for citizen guidance only. Official decisions, fee payments, and formal submissions must always be conducted through official government portals.
@@ -420,7 +420,7 @@ All system configurations can be set via `.env`:
 
 ---
 
-## 👨‍💻 Author & Project Details
+## Author & Project Details
 
 - **Author / Developer:** Mehedi Hossen Fahim
 - **GitHub Profile:** [@MehdiHossenFahim](https://github.com/MehdiHossenFahim)
@@ -430,6 +430,6 @@ All system configurations can be set via `.env`:
 
 ---
 
-## 📜 License
+## License
 
 Distributed under the MIT License for educational and public-benefit demonstration purposes.

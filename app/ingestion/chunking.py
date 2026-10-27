@@ -128,7 +128,7 @@ class DocumentChunker:
             c.total_chunks = len(chunks)
 
         logger.info(
-            "Chunked doc %s (%s) → %d chunks",
+            "Chunked doc %s (%s) -> %d chunks",
             doc.doc_id, doc.title[:40], len(chunks)
         )
         return chunks
