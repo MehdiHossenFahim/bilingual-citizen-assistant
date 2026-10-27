@@ -4,13 +4,14 @@
 
 A production-grade, Agentic RAG-powered AI assistant for Bangladesh government public services, supporting **Bangla (বাংলা)**, **English**, and **Banglish** queries with verifiable citations from official government portals.
 
+[![Live Web App](https://img.shields.io/badge/Live%20Demo-Vercel%20App-006A4E?logo=vercel)](https://frontend-delta-three-79.vercel.app/)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/MehdiHossenFahim/bilingual-citizen-assistant)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green)](https://fastapi.tiangolo.com)
 [![LangGraph](https://img.shields.io/badge/LangGraph-0.2-orange)](https://langchain-ai.github.io/langgraph/)
 [![React 18](https://img.shields.io/badge/React-18.3-61dafb?logo=react)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite)](https://vitejs.dev)
-[![Deployment](https://img.shields.io/badge/Deployed-Vercel%20%2B%20Render-black)](https://github.com/MehdiHossenFahim/bilingual-citizen-assistant)
+[![Deployment](https://img.shields.io/badge/Deployed-Vercel%20%2B%20Render-black)](https://frontend-delta-three-79.vercel.app/)
 
 ---
 

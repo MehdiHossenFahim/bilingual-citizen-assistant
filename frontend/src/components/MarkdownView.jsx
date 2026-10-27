@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Parses inline formatting:
@@ -18,7 +18,8 @@ function renderInline(text, onCitationClick) {
   // 4. Italic: \*(.*?)\*
   // 5. Code: `(.*?)`
   // 6. Bare URL: (https?:\/\/[^\s\)]+|www\.[^\s\)]+)
-  const combinedRegex = /(\[[^\]]+\]\([^\)]+\)|\[src-[\d,\s\-src]+\]|\*\*.*?\*\*|\*.*?\*|`.*?`|https?:\/\/[^\s\)]+|www\.[^\s\)]+)/g;
+  const combinedRegex =
+    /(\[[^\]]+\]\([^\)]+\)|\[src-[\d,\s\-src]+\]|\*\*.*?\*\*|\*.*?\*|`.*?`|https?:\/\/[^\s\)]+|www\.[^\s\)]+)/g;
 
   const parts = text.split(combinedRegex);
 
@@ -28,7 +29,9 @@ function renderInline(text, onCitationClick) {
     // Markdown link: [text](url)
     const linkMatch = part.match(/^\[([^\]]+)\]\(([^\)]+)\)$/);
     if (linkMatch) {
-      const href = linkMatch[2].startsWith('http') ? linkMatch[2] : `https://${linkMatch[2]}`;
+      const href = linkMatch[2].startsWith("http")
+        ? linkMatch[2]
+        : `https://${linkMatch[2]}`;
       return (
         <a
           key={index}
@@ -43,8 +46,10 @@ function renderInline(text, onCitationClick) {
     }
 
     // Citation badge: e.g. [src-1] or [src-1, src-2]
-    if (part.startsWith('[src-') && part.endsWith(']')) {
-      const srcNumbers = Array.from(part.matchAll(/src-(\d+)/g)).map((m) => parseInt(m[1], 10));
+    if (part.startsWith("[src-") && part.endsWith("]")) {
+      const srcNumbers = Array.from(part.matchAll(/src-(\d+)/g)).map((m) =>
+        parseInt(m[1], 10),
+      );
       return (
         <span key={index} className="citation-pill-group">
           {srcNumbers.map((num) => (
@@ -66,7 +71,7 @@ function renderInline(text, onCitationClick) {
     }
 
     // Bold: **text**
-    if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
+    if (part.startsWith("**") && part.endsWith("**") && part.length >= 4) {
       return (
         <strong key={index} className="msg-strong">
           {part.slice(2, -2)}
@@ -75,7 +80,12 @@ function renderInline(text, onCitationClick) {
     }
 
     // Italic: *text*
-    if (part.startsWith('*') && part.endsWith('*') && part.length >= 2 && !part.startsWith('**')) {
+    if (
+      part.startsWith("*") &&
+      part.endsWith("*") &&
+      part.length >= 2 &&
+      !part.startsWith("**")
+    ) {
       return (
         <em key={index} className="msg-italic">
           {part.slice(1, -1)}
@@ -84,7 +94,7 @@ function renderInline(text, onCitationClick) {
     }
 
     // Code: `code`
-    if (part.startsWith('`') && part.endsWith('`') && part.length >= 2) {
+    if (part.startsWith("`") && part.endsWith("`") && part.length >= 2) {
       return (
         <code key={index} className="msg-code">
           {part.slice(1, -1)}
@@ -94,7 +104,7 @@ function renderInline(text, onCitationClick) {
 
     // Bare URL: https://... or www....
     if (/^(https?:\/\/|www\.)[^\s\)]+$/.test(part)) {
-      const href = part.startsWith('http') ? part : `https://${part}`;
+      const href = part.startsWith("http") ? part : `https://${part}`;
       return (
         <a
           key={index}
@@ -123,7 +133,7 @@ function renderInline(text, onCitationClick) {
 export default function MarkdownView({ content, onCitationClick }) {
   if (!content) return null;
 
-  const rawLines = content.split('\n');
+  const rawLines = content.split("\n");
   const blocks = [];
   let currentList = null; // { type: 'ul' | 'ol', items: [] }
 
@@ -145,29 +155,29 @@ export default function MarkdownView({ content, onCitationClick }) {
     }
 
     // Markdown Headers
-    if (trimmed.startsWith('### ')) {
+    if (trimmed.startsWith("### ")) {
       flushList();
       blocks.push({
-        type: 'h3',
-        content: trimmed.replace(/^###\s+/, ''),
+        type: "h3",
+        content: trimmed.replace(/^###\s+/, ""),
       });
       continue;
     }
 
-    if (trimmed.startsWith('## ')) {
+    if (trimmed.startsWith("## ")) {
       flushList();
       blocks.push({
-        type: 'h2',
-        content: trimmed.replace(/^##\s+/, ''),
+        type: "h2",
+        content: trimmed.replace(/^##\s+/, ""),
       });
       continue;
     }
 
-    if (trimmed.startsWith('# ')) {
+    if (trimmed.startsWith("# ")) {
       flushList();
       blocks.push({
-        type: 'h1',
-        content: trimmed.replace(/^#\s+/, ''),
+        type: "h1",
+        content: trimmed.replace(/^#\s+/, ""),
       });
       continue;
     }
@@ -177,7 +187,7 @@ export default function MarkdownView({ content, onCitationClick }) {
     if (boldHeaderMatch) {
       flushList();
       blocks.push({
-        type: 'section-heading',
+        type: "section-heading",
         content: boldHeaderMatch[1],
       });
       continue;
@@ -186,9 +196,9 @@ export default function MarkdownView({ content, onCitationClick }) {
     // Unordered List Items: •, -, *, +
     const ulMatch = trimmed.match(/^[•\-\*\+]\s+(.*)$/);
     if (ulMatch) {
-      if (!currentList || currentList.type !== 'ul') {
+      if (!currentList || currentList.type !== "ul") {
         flushList();
-        currentList = { type: 'ul', items: [] };
+        currentList = { type: "ul", items: [] };
       }
       currentList.items.push(ulMatch[1]);
       continue;
@@ -197,9 +207,9 @@ export default function MarkdownView({ content, onCitationClick }) {
     // Ordered List Items: 1. or ১. or 1) or ১)
     const olMatch = trimmed.match(/^(\d+|[০-৯]+)[\.\)]\s+(.*)$/);
     if (olMatch) {
-      if (!currentList || currentList.type !== 'ol') {
+      if (!currentList || currentList.type !== "ol") {
         flushList();
-        currentList = { type: 'ol', items: [] };
+        currentList = { type: "ol", items: [] };
       }
       currentList.items.push(olMatch[2]);
       continue;
@@ -208,7 +218,7 @@ export default function MarkdownView({ content, onCitationClick }) {
     // Regular paragraph
     flushList();
     blocks.push({
-      type: 'p',
+      type: "p",
       content: trimmed,
     });
   }
@@ -219,25 +229,25 @@ export default function MarkdownView({ content, onCitationClick }) {
     <div className="markdown-body">
       {blocks.map((block, idx) => {
         switch (block.type) {
-          case 'h1':
+          case "h1":
             return (
               <h2 key={idx} className="msg-h1">
                 {renderInline(block.content, onCitationClick)}
               </h2>
             );
-          case 'h2':
+          case "h2":
             return (
               <h3 key={idx} className="msg-h2">
                 {renderInline(block.content, onCitationClick)}
               </h3>
             );
-          case 'h3':
+          case "h3":
             return (
               <h4 key={idx} className="msg-h3">
                 {renderInline(block.content, onCitationClick)}
               </h4>
             );
-          case 'section-heading':
+          case "section-heading":
             return (
               <div key={idx} className="msg-section-heading">
                 <span className="msg-section-title">
@@ -245,7 +255,7 @@ export default function MarkdownView({ content, onCitationClick }) {
                 </span>
               </div>
             );
-          case 'ul':
+          case "ul":
             return (
               <ul key={idx} className="msg-ul">
                 {block.items.map((item, liIdx) => (
@@ -255,7 +265,7 @@ export default function MarkdownView({ content, onCitationClick }) {
                 ))}
               </ul>
             );
-          case 'ol':
+          case "ol":
             return (
               <ol key={idx} className="msg-ol">
                 {block.items.map((item, liIdx) => (
@@ -265,7 +275,7 @@ export default function MarkdownView({ content, onCitationClick }) {
                 ))}
               </ol>
             );
-          case 'p':
+          case "p":
           default:
             return (
               <p key={idx} className="msg-p">
@@ -277,4 +287,3 @@ export default function MarkdownView({ content, onCitationClick }) {
     </div>
   );
 }
-

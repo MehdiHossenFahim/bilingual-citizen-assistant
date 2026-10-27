@@ -73,13 +73,14 @@ def create_report(output_path: str):
     run_sub.font.color.rgb = COLOR_SECONDARY
 
     # Metadata Card Table
-    meta_table = doc.add_table(rows=5, cols=2)
+    meta_table = doc.add_table(rows=6, cols=2)
     meta_table.alignment = WD_TABLE_ALIGNMENT.CENTER
     meta_data = [
         ("Author / Student:", "Mehedi Hossen Fahim"),
         ("Project Domain:", "Applied Generative AI / Agentic NLP / Citizen-Facing Public Systems"),
+        ("Live Deployed Application:", "https://frontend-delta-three-79.vercel.app/"),
         ("Source Code Repository:", "https://github.com/MehdiHossenFahim/bilingual-citizen-assistant.git"),
-        ("Live Deployed Platform:", "Frontend: Vercel Cloud SPA | Backend: Render ASGI Web Service"),
+        ("Backend Web Service:", "https://bilingual-citizen-assistant.onrender.com (FastAPI ASGI Core)"),
         ("Technical Stack:", "FastAPI, React 18, Vite, LangGraph, ChromaDB, BM25, Gemini API, Docker"),
     ]
     for row_idx, (k, v) in enumerate(meta_data):
@@ -294,7 +295,7 @@ def create_report(output_path: str):
     add_body_p(
         "The project has been prepared and verified for cloud deployment:"
     )
-    add_bullet_p("Frontend deployed on Vercel with edge reverse proxy rewrites (/api/*, /health, /ready) seamlessly eliminating cross-origin browser blocking.", bold_prefix="Vercel Edge Deployment: ")
+    add_bullet_p("Frontend deployed live on Vercel at https://frontend-delta-three-79.vercel.app/ with edge reverse proxy rewrites (/api/*, /health, /ready) seamlessly eliminating cross-origin browser blocking.", bold_prefix="Vercel Edge Deployment: ")
     add_bullet_p("Backend packaged as a multi-stage Docker container deployed on Render cloud with non-blocking ASGI lifespan.", bold_prefix="Render ASGI Web Service: ")
     add_bullet_p("All 60 automated test cases passed in 0.71s with 100% pass rate, validating API contracts, rate limiting, citations, and fallback behaviors.", bold_prefix="Automated Test Suite: ")
     add_bullet_p("Clean git repository with zero emojis across code, markup, documentation, and configuration files.", bold_prefix="Production Cleanliness: ")
