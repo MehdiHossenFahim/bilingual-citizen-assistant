@@ -1,0 +1,10 @@
+{
+  "name": "bilingual-citizen-assistant-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bilingual Citizen Services AI Assistant for Bangladesh Public Services",
+  "scripts": {
+    "build": "npm --prefix frontend install && npm --prefix frontend run build",
+    "start": "npm --prefix frontend run preview"
+  }
+}

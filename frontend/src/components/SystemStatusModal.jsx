@@ -88,6 +88,7 @@ export default function SystemStatusModal({ isOpen, onClose, statusData, onRefre
 
             <button
               onClick={onRefresh}
+              disabled={statusData.checking}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -95,13 +96,13 @@ export default function SystemStatusModal({ isOpen, onClose, statusData, onRefre
                 padding: '6px 12px',
                 borderRadius: '6px',
                 border: '1px solid #cbd5e1',
-                background: '#ffffff',
-                cursor: 'pointer',
+                background: statusData.checking ? '#f1f5f9' : '#ffffff',
+                cursor: statusData.checking ? 'not-allowed' : 'pointer',
                 fontSize: '0.85rem',
               }}
             >
-              <RefreshCw size={14} />
-              <span>পুনরায় পরীক্ষা</span>
+              <RefreshCw size={14} className={statusData.checking ? "spinner" : ""} />
+              <span>{statusData.checking ? 'যাচাই করা হচ্ছে...' : 'পুনরায় পরীক্ষা'}</span>
             </button>
           </div>
         </div>

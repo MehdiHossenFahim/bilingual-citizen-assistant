@@ -25,6 +25,29 @@ const FEEDBACK_ENDPOINT = `${BACKEND_URL}/api/v1/feedback`;
 const HEALTH_ENDPOINT = `${BACKEND_URL}/health`;
 const READY_ENDPOINT = `${BACKEND_URL}/ready`;
 
+// Resilient API client: tries relative path first (Vercel edge proxy / Vite dev proxy)
+// and seamlessly falls back to direct BACKEND_URL if needed.
+const apiFetch = async (path, options = {}) => {
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return fetch(path, options);
+  }
+
+  // 1. Try relative path (same-origin, avoids CORS & mobile tracker blocking on Vercel)
+  try {
+    const res = await fetch(path, options);
+    // If the proxy handled it (even 4xx/5xx from API), return it
+    if (res.status !== 404) {
+      return res;
+    }
+  } catch (err) {
+    // If network or relative fetch failed, proceed to direct URL fallback
+  }
+
+  // 2. Direct backend fallback
+  const directUrl = `${BACKEND_URL}${path.startsWith('/') ? path : '/' + path}`;
+  return fetch(directUrl, options);
+};
+
 export default function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -42,6 +65,7 @@ export default function App() {
   const [statusData, setStatusData] = useState({
     online: false,
     ready: false,
+    checking: false,
     latency_ms: null,
     checks: {},
     error: null,
@@ -64,11 +88,13 @@ export default function App() {
   }, []);
 
   const checkHealth = async () => {
+    setStatusData((prev) => ({ ...prev, checking: true }));
     const t0 = performance.now();
     try {
+      // 45s timeout: comfortably allows Render free tier to wake up from cold start (~45-60s)
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-      const resHealth = await fetch(HEALTH_ENDPOINT, { method: 'GET', signal: controller.signal });
+      const timeoutId = setTimeout(() => controller.abort(), 45000);
+      const resHealth = await apiFetch('/health', { method: 'GET', signal: controller.signal });
       clearTimeout(timeoutId);
       const latency = Math.round(performance.now() - t0);
 
@@ -77,8 +103,8 @@ export default function App() {
         let checks = { bm25_index: 'ok', dense_index: 'ok', workflow: 'ok' };
         try {
           const rController = new AbortController();
-          const rTimeoutId = setTimeout(() => rController.abort(), 8000);
-          const resReady = await fetch(READY_ENDPOINT, { method: 'GET', signal: rController.signal });
+          const rTimeoutId = setTimeout(() => rController.abort(), 12000);
+          const resReady = await apiFetch('/ready', { method: 'GET', signal: rController.signal });
           clearTimeout(rTimeoutId);
           if (resReady.ok) {
             const dataReady = await resReady.json();
@@ -92,6 +118,7 @@ export default function App() {
         setStatusData({
           online: true,
           ready,
+          checking: false,
           latency_ms: latency,
           checks,
           error: null,
@@ -102,19 +129,23 @@ export default function App() {
           ...prev,
           online: false,
           ready: false,
+          checking: false,
           error: `Health check returned HTTP ${resHealth.status}`,
         }));
       }
     } catch (err) {
       setStatusData((prev) => {
         if (prev.online && err.name === 'AbortError') {
-          return prev;
+          return { ...prev, checking: false };
         }
         return {
           ...prev,
           online: false,
           ready: false,
-          error: err.name === 'AbortError' ? 'Ping timed out (Server waking up)' : (err.message || 'Cannot connect to backend'),
+          checking: false,
+          error: err.name === 'AbortError' 
+            ? 'Ping timed out (Render free tier waking up, please wait ~45s)' 
+            : (err.message || 'Cannot connect to backend'),
         };
       });
     }
@@ -148,7 +179,7 @@ export default function App() {
     try {
       setLoadingStatus('ভাষাগত বিশ্লেষণ ও হাইব্রিড সার্চ (BM25 + BGE-M3 Dense)...');
 
-      const response = await fetch(CHAT_ENDPOINT, {
+      const response = await apiFetch('/api/v1/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -264,7 +295,7 @@ export default function App() {
       // Calculate simple hash of message content or query
       const queryHash = btoa(encodeURIComponent(message.content.substring(0, 60))).substring(0, 32);
 
-      await fetch(FEEDBACK_ENDPOINT, {
+      await apiFetch('/api/v1/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

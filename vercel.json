@@ -1,0 +1,23 @@
+{
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://bilingual-citizen-assistant.onrender.com/api/:path*"
+    },
+    {
+      "source": "/health",
+      "destination": "https://bilingual-citizen-assistant.onrender.com/health"
+    },
+    {
+      "source": "/ready",
+      "destination": "https://bilingual-citizen-assistant.onrender.com/ready"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
