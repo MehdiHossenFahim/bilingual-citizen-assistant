@@ -293,6 +293,7 @@ def generate_answer(state: RAGState) -> dict[str, Any]:
             "citations": citations,
             "limitations": limitations,
             "status": "answered",
+            "response_language": response_lang,
         }
     except Exception as exc:
         logger.error("Generation failed: %s", exc, exc_info=True)
