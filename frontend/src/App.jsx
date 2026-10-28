@@ -55,12 +55,8 @@ export default function App() {
   const [loadingStatus, setLoadingStatus] = useState('');
   const [language, setLanguage] = useState('auto');
   const [sessionId] = useState(() => 'sess_' + Math.random().toString(36).substring(2, 12));
-  const [sidebarOpen, setSidebarOpen] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth > 960;
-    }
-    return true;
-  });
+  // Full-screen chat by default, matching Gemini / ChatGPT UX
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const [statusData, setStatusData] = useState({
     online: false,
@@ -424,12 +420,9 @@ export default function App() {
               <Send size={18} />
             </button>
           </div>
-          <div className="input-disclaimer">
-            * এটি একটি এআই পরিচালিত নাগরিক সেবা সহকারী। গুরুত্বপূর্ণ লেনদেনের পূর্বে সংশ্লিষ্ট সরকারি কর্তৃপক্ষ থেকে তথ্য যাচাই করার পরামর্শ দেওয়া হচ্ছে।
-          </div>
-          <footer className="workspace-footer">
-            <span>© 2026 Bilingual Citizen Services AI Assistant • Developed by <strong>Mehedi Hossen Fahim</strong></span>
-          </footer>
+          <p className="input-disclaimer">
+            নাগরিক সেবা এআই ভুল করতে পারে। গুরুত্বপূর্ণ তথ্যে সংশ্লিষ্ট সরকারি কর্তৃপক্ষ থেকে যাচাই করুন।
+          </p>
         </div>
       </main>
 

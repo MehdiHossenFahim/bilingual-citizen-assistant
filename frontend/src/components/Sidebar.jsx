@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlusCircle, Globe, ShieldCheck, Activity, ChevronLeft, User, Landmark, BookMarked, CreditCard, Receipt } from 'lucide-react';
+import { PlusCircle, Globe, ShieldCheck, Activity, ExternalLink, User, Landmark, Code, Server } from 'lucide-react';
 
 export default function Sidebar({
   selectedLanguage,
@@ -30,8 +30,11 @@ export default function Sidebar({
     }
   };
 
+  const docsUrl = `${statusData.backendUrl || 'https://bilingual-citizen-assistant.onrender.com'}/docs`;
+
   return (
     <aside className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
+      {/* Sidebar Header */}
       <div className="sidebar-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div className="logo-badge">
@@ -42,18 +45,17 @@ export default function Sidebar({
             <p>Bilingual Public Services AI</p>
           </div>
         </div>
-
-        <button
-          className="sidebar-close-btn"
-          onClick={onClose}
-          title="সাইডবার লুকান (Collapse sidebar)"
-          aria-label="Collapse sidebar"
-        >
-          <ChevronLeft size={20} />
-        </button>
       </div>
 
       <div className="sidebar-content">
+        {/* New Chat Primary Action (Top of sidebar like ChatGPT/Gemini) */}
+        <div>
+          <button className="btn-new-chat" onClick={handleNewChatClick}>
+            <PlusCircle size={18} />
+            <span>নতুন কথোপকথন শুরু করুন</span>
+          </button>
+        </div>
+
         {/* Language Selection */}
         <div>
           <div className="section-label">উত্তর দেওয়ার ভাষা (Language)</div>
@@ -63,6 +65,8 @@ export default function Sidebar({
                 key={lang.code}
                 className={`lang-option ${selectedLanguage === lang.code ? 'active' : ''}`}
                 onClick={() => handleLanguageSelect(lang.code)}
+                role="button"
+                tabIndex={0}
               >
                 <span>{lang.label}</span>
                 {selectedLanguage === lang.code && <Globe size={16} color="#006a4e" />}
@@ -71,88 +75,54 @@ export default function Sidebar({
           </div>
         </div>
 
-        {/* Covered Services */}
+        {/* Developer & Technical Documentation (Option 1) */}
         <div>
-          <div className="section-label">অন্তর্ভুক্ত সরকারি সেবা (Services)</div>
-          <div className="services-list">
-            <div className="service-item">
-              <BookMarked size={18} color="#006a4e" style={{ flexShrink: 0 }} />
-              <div>
-                <strong>পাসপোর্ট (Passport)</strong>
-                <div style={{ fontSize: '0.72rem', color: '#64748b' }}>ই-পাসপোর্ট, নবায়ন ও ফি নির্দেশিকা</div>
+          <div className="section-label">কারিগরি ও এপিআই রিসোর্স (Developer)</div>
+          <div className="sidebar-menu-links">
+            <a
+              href={docsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sidebar-menu-item"
+              title="FastAPI Swagger Documentation"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Code size={16} color="#006a4e" />
+                <span>FastAPI Swagger Docs</span>
               </div>
-            </div>
-            <div className="service-item">
-              <CreditCard size={18} color="#006a4e" style={{ flexShrink: 0 }} />
-              <div>
-                <strong>জাতীয় পরিচয়পত্র (NID)</strong>
-                <div style={{ fontSize: '0.72rem', color: '#64748b' }}>সংশোধন, হারিয়ে যাওয়া ও নতুন ভোটার</div>
+              <ExternalLink size={13} color="#94a3b8" />
+            </a>
+
+            <div
+              className="sidebar-menu-item"
+              onClick={() => {
+                onOpenStatusModal();
+                if (window.innerWidth <= 900 && onClose) onClose();
+              }}
+              role="button"
+              tabIndex={0}
+              title="সিস্টেম স্বাস্থ্য ও ডায়াগনস্টিকস"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Server size={16} color="#006a4e" />
+                <span>সিস্টেম ডায়াগনস্টিকস</span>
               </div>
-            </div>
-            <div className="service-item">
-              <Receipt size={18} color="#006a4e" style={{ flexShrink: 0 }} />
-              <div>
-                <strong>ই-টিন (e-TIN)</strong>
-                <div style={{ fontSize: '0.72rem', color: '#64748b' }}>কর সনদ নিবন্ধন ও তথ্য পুনরুদ্ধার</div>
-              </div>
+              <span className={`dot ${statusData.online ? 'online' : 'offline'}`} />
             </div>
           </div>
         </div>
 
-        {/* Live System Status Card */}
-        <div>
-          <div className="section-label">সার্ভার সংযোগ অবস্থা</div>
-          <div className="status-card" onClick={onOpenStatusModal} style={{ cursor: 'pointer' }}>
-            <div className="status-indicator">
-              <span className={`dot ${statusData.online ? (statusData.ready ? 'online' : 'warning') : 'offline'}`} />
-              <span style={{ fontWeight: 600 }}>
-                {statusData.online
-                  ? statusData.ready
-                    ? 'অনলাইন ও সক্রিয়'
-                    : 'প্রস্তুত হচ্ছে...'
-                  : 'সংযোগ বিচ্ছিন্ন (Offline)'}
-              </span>
-            </div>
-
-            <div className="status-details">
-              <div>BM25 ইনডেক্স: {statusData.checks?.bm25_index || 'checking...'}</div>
-              <div>ChromaDB ভেক্টর: {statusData.checks?.dense_index || 'checking...'}</div>
-              <div>LangGraph পাইপলাইন: {statusData.checks?.workflow || 'checking...'}</div>
-            </div>
-
-            <div style={{ marginTop: '8px', fontSize: '0.75rem', color: '#006a4e', fontWeight: 600 }}>
-              ডায়াগনস্টিকস ও পিং বিস্তারিত দেখুন &rarr;
-            </div>
-          </div>
-        </div>
-
-        {/* Authority Trust Badge */}
-        <div style={{
-          marginTop: 'auto',
-          padding: '12px',
-          background: '#f8fafc',
-          borderRadius: '8px',
-          border: '1px solid #e2e8f0',
-          fontSize: '0.75rem',
-          color: '#475569',
-          display: 'flex',
-          gap: '8px',
-          alignItems: 'flex-start'
-        }}>
-          <ShieldCheck size={18} color="#006a4e" style={{ flexShrink: 0, marginTop: '2px' }} />
+        {/* Verified Knowledge Base Notice (Informative, non-clickable) */}
+        <div className="sidebar-trust-box">
+          <ShieldCheck size={16} color="#006a4e" style={{ flexShrink: 0, marginTop: '2px' }} />
           <div>
-            <strong>যাচাইকৃত সরকারি তথ্যভাণ্ডার:</strong> DIP, নির্বাচন কমিশন (EC) এবং এনবিআর (NBR) এর অফিসিয়াল পোর্টাল থেকে সংগৃহীত।
+            <strong>যাচাইকৃত তথ্যভাণ্ডার:</strong> DIP (পাসপোর্ট), নির্বাচন কমিশন (NID) ও এনবিআর (TIN) এর সরকারি প্রকাশনা থেকে সংগৃহীত।
           </div>
         </div>
       </div>
 
+      {/* Developer Attribution Footer */}
       <div className="sidebar-footer">
-        <button className="btn-new-chat" onClick={handleNewChatClick}>
-          <PlusCircle size={18} />
-          <span>নতুন চ্যাট শুরু করুন</span>
-        </button>
-
-        {/* Developer Attribution */}
         <div className="sidebar-dev-credit">
           <User size={13} color="#006a4e" />
           <span>Developed by: <strong>Mehedi Hossen Fahim</strong></span>
