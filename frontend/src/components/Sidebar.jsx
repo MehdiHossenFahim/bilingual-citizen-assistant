@@ -39,7 +39,19 @@ export default function Sidebar({
     <aside className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
       {/* Sidebar Header */}
       <div className="sidebar-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div
+          className="sidebar-header-brand"
+          onClick={handleNewChatClick}
+          role="button"
+          tabIndex={0}
+          title={t.newChat}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleNewChatClick();
+            }
+          }}
+        >
           <div className="logo-badge">
             <Landmark size={20} color={primaryIconColor} />
           </div>

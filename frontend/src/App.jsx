@@ -393,6 +393,7 @@ export default function App() {
           onOpenStatusModal={() => setStatusModalOpen(true)}
           sidebarOpen={sidebarOpen}
           onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+          onNewChat={handleNewChat}
         />
 
         {/* Outer scroll container spanning full width (100%) so the scrollbar sits at the far right edge of the viewport like ChatGPT */}

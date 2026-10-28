@@ -11,6 +11,7 @@ export default function Header({
   onOpenStatusModal,
   sidebarOpen,
   onToggleSidebar,
+  onNewChat,
 }) {
   return (
     <header className="top-navbar">
@@ -24,7 +25,19 @@ export default function Header({
           {sidebarOpen ? <PanelLeftClose size={20} /> : <PanelLeft size={20} />}
         </button>
 
-        <div className="top-navbar-brand">
+        <div
+          className="top-navbar-brand"
+          onClick={onNewChat}
+          role="button"
+          tabIndex={0}
+          title={t.newChat}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onNewChat && onNewChat();
+            }
+          }}
+        >
           <div className="brand-badge">
             <Landmark size={20} color={theme === 'dark' ? '#10b981' : '#006a4e'} />
           </div>
