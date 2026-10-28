@@ -58,6 +58,29 @@ export default function App() {
   // Full-screen chat by default, matching Gemini / ChatGPT UX
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('app_theme') || 'light';
+    }
+    return 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('app_theme', theme);
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  const handleToggleLanguage = () => {
+    setLanguage((prev) => {
+      if (prev === 'auto') return 'bn';
+      if (prev === 'bn') return 'en';
+      return 'auto';
+    });
+  };
   const [statusData, setStatusData] = useState({
     online: false,
     ready: false,
@@ -351,6 +374,10 @@ export default function App() {
           onOpenStatusModal={() => setStatusModalOpen(true)}
           sidebarOpen={sidebarOpen}
           onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
+          language={language}
+          onToggleLanguage={handleToggleLanguage}
+          theme={theme}
+          onToggleTheme={handleToggleTheme}
         />
 
         {/* Messages Stream */}

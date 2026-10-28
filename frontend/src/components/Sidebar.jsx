@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlusCircle, Globe, ShieldCheck, Activity, ExternalLink, User, Landmark, Code, Server } from 'lucide-react';
+import { PlusCircle, Globe, ShieldCheck, ExternalLink, User, Landmark, Code, Server } from 'lucide-react';
 
 export default function Sidebar({
   selectedLanguage,
@@ -41,8 +41,8 @@ export default function Sidebar({
             <Landmark size={20} color="#006a4e" />
           </div>
           <div className="sidebar-title">
-            <h1>নাগরিক সেবা সহকারী</h1>
-            <p>Bilingual Public Services AI</p>
+            <h1>বাংলাদেশ নাগরিক সেবা সহকারী</h1>
+            <p>Bilingual Citizen Services AI</p>
           </div>
         </div>
       </div>
@@ -121,12 +121,19 @@ export default function Sidebar({
         </div>
       </div>
 
-      {/* Developer Attribution Footer */}
+      {/* Developer Attribution Footer with link to Portfolio */}
       <div className="sidebar-footer">
-        <div className="sidebar-dev-credit">
+        <a
+          href="https://portfolio-mehedi-hossen-fahim.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="sidebar-dev-credit"
+          title="Mehedi Hossen Fahim — Portfolio খুলুন"
+        >
           <User size={13} color="#006a4e" />
           <span>Developed by: <strong>Mehedi Hossen Fahim</strong></span>
-        </div>
+          <ExternalLink size={12} style={{ opacity: 0.6, marginLeft: '2px' }} />
+        </a>
       </div>
     </aside>
   );
