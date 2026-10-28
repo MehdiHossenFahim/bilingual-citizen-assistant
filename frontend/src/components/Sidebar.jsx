@@ -2,6 +2,8 @@ import React from 'react';
 import { PlusCircle, Globe, ShieldCheck, ExternalLink, User, Landmark, Code, Server } from 'lucide-react';
 
 export default function Sidebar({
+  t,
+  theme,
   selectedLanguage,
   onLanguageChange,
   statusData,
@@ -11,9 +13,9 @@ export default function Sidebar({
   onClose,
 }) {
   const languages = [
-    { code: 'auto', label: 'স্বয়ংক্রিয় (Auto-detect)' },
-    { code: 'bn', label: 'বাংলা (Bangla)' },
-    { code: 'en', label: 'English' },
+    { code: 'auto', label: t.langAuto },
+    { code: 'bn', label: t.langBn },
+    { code: 'en', label: t.langEn },
   ];
 
   const handleLanguageSelect = (code) => {
@@ -31,6 +33,7 @@ export default function Sidebar({
   };
 
   const docsUrl = `${statusData.backendUrl || 'https://bilingual-citizen-assistant.onrender.com'}/docs`;
+  const primaryIconColor = theme === 'dark' ? '#10b981' : '#006a4e';
 
   return (
     <aside className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
@@ -38,27 +41,27 @@ export default function Sidebar({
       <div className="sidebar-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div className="logo-badge">
-            <Landmark size={20} color="#006a4e" />
+            <Landmark size={20} color={primaryIconColor} />
           </div>
           <div className="sidebar-title">
-            <h1>বাংলাদেশ নাগরিক সেবা সহকারী</h1>
-            <p>Bilingual Citizen Services AI</p>
+            <h1>{t.brandTitle}</h1>
+            <p>{t.brandSubtitle}</p>
           </div>
         </div>
       </div>
 
       <div className="sidebar-content">
-        {/* New Chat Primary Action (Top of sidebar like ChatGPT/Gemini) */}
+        {/* New Chat Primary Action */}
         <div>
           <button className="btn-new-chat" onClick={handleNewChatClick}>
             <PlusCircle size={18} />
-            <span>নতুন কথোপকথন শুরু করুন</span>
+            <span>{t.newChat}</span>
           </button>
         </div>
 
-        {/* Language Selection */}
+        {/* Model Response Language Preference */}
         <div>
-          <div className="section-label">উত্তর দেওয়ার ভাষা (Language)</div>
+          <div className="section-label">{t.responseLangLabel}</div>
           <div className="lang-select-group">
             {languages.map((lang) => (
               <div
@@ -69,15 +72,15 @@ export default function Sidebar({
                 tabIndex={0}
               >
                 <span>{lang.label}</span>
-                {selectedLanguage === lang.code && <Globe size={16} color="#006a4e" />}
+                {selectedLanguage === lang.code && <Globe size={16} color={primaryIconColor} />}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Developer & Technical Documentation (Option 1) */}
+        {/* Developer & Technical Documentation */}
         <div>
-          <div className="section-label">কারিগরি ও এপিআই রিসোর্স (Developer)</div>
+          <div className="section-label">{t.devSectionLabel}</div>
           <div className="sidebar-menu-links">
             <a
               href={docsUrl}
@@ -87,8 +90,8 @@ export default function Sidebar({
               title="FastAPI Swagger Documentation"
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Code size={16} color="#006a4e" />
-                <span>FastAPI Swagger Docs</span>
+                <Code size={16} color={primaryIconColor} />
+                <span>{t.swaggerDocs}</span>
               </div>
               <ExternalLink size={13} color="#94a3b8" />
             </a>
@@ -101,22 +104,22 @@ export default function Sidebar({
               }}
               role="button"
               tabIndex={0}
-              title="সিস্টেম স্বাস্থ্য ও ডায়াগনস্টিকস"
+              title={t.systemDiagnostics}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Server size={16} color="#006a4e" />
-                <span>সিস্টেম ডায়াগনস্টিকস</span>
+                <Server size={16} color={primaryIconColor} />
+                <span>{t.systemDiagnostics}</span>
               </div>
               <span className={`dot ${statusData.online ? 'online' : 'offline'}`} />
             </div>
           </div>
         </div>
 
-        {/* Verified Knowledge Base Notice (Informative, non-clickable) */}
+        {/* Verified Knowledge Base Notice */}
         <div className="sidebar-trust-box">
-          <ShieldCheck size={16} color="#006a4e" style={{ flexShrink: 0, marginTop: '2px' }} />
+          <ShieldCheck size={16} color={primaryIconColor} style={{ flexShrink: 0, marginTop: '2px' }} />
           <div>
-            <strong>যাচাইকৃত তথ্যভাণ্ডার:</strong> DIP (পাসপোর্ট), নির্বাচন কমিশন (NID) ও এনবিআর (TIN) এর সরকারি প্রকাশনা থেকে সংগৃহীত।
+            <strong>{t.trustBoxTitle}</strong> {t.trustBoxDesc}
           </div>
         </div>
       </div>
@@ -128,11 +131,11 @@ export default function Sidebar({
           target="_blank"
           rel="noopener noreferrer"
           className="sidebar-dev-credit"
-          title="Mehedi Hossen Fahim — Portfolio খুলুন"
+          title="Mehedi Hossen Fahim — Portfolio"
         >
-          <User size={13} color="#006a4e" />
+          <User size={13} color={primaryIconColor} />
           <span>Developed by: <strong>Mehedi Hossen Fahim</strong></span>
-          <ExternalLink size={12} style={{ opacity: 0.6, marginLeft: '2px' }} />
+          <ExternalLink size={12} className="credit-ext-icon" />
         </a>
       </div>
     </aside>

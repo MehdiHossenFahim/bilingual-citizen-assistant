@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar';
 import ChatMessage from './components/ChatMessage';
 import ExampleQuestions from './components/ExampleQuestions';
 import SystemStatusModal from './components/SystemStatusModal';
+import { translations } from './i18n';
 
 const getBackendUrl = () => {
   if (import.meta.env.VITE_BACKEND_URL) {
@@ -53,6 +54,25 @@ export default function App() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState('');
+  // Website UI Language (Bangla <-> English)
+  const [uiLang, setUiLang] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('app_ui_lang') || 'bn';
+    }
+    return 'bn';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('app_ui_lang', uiLang);
+  }, [uiLang]);
+
+  const handleToggleUiLang = () => {
+    setUiLang((prev) => (prev === 'bn' ? 'en' : 'bn'));
+  };
+
+  const t = translations[uiLang] || translations.bn;
+
+  // Model response generation language preference (auto / bn / en)
   const [language, setLanguage] = useState('auto');
   const [sessionId] = useState(() => 'sess_' + Math.random().toString(36).substring(2, 12));
   // Full-screen chat by default, matching Gemini / ChatGPT UX
@@ -72,14 +92,6 @@ export default function App() {
 
   const handleToggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
-
-  const handleToggleLanguage = () => {
-    setLanguage((prev) => {
-      if (prev === 'auto') return 'bn';
-      if (prev === 'bn') return 'en';
-      return 'auto';
-    });
   };
   const [statusData, setStatusData] = useState({
     online: false,
@@ -358,6 +370,8 @@ export default function App() {
 
       {/* Left Sidebar */}
       <Sidebar
+        t={t}
+        theme={theme}
         selectedLanguage={language}
         onLanguageChange={setLanguage}
         statusData={statusData}
@@ -370,69 +384,72 @@ export default function App() {
       {/* Main Chat Workspace */}
       <main className="chat-main">
         <Header
+          t={t}
+          uiLang={uiLang}
+          onToggleUiLang={handleToggleUiLang}
+          theme={theme}
+          onToggleTheme={handleToggleTheme}
           statusData={statusData}
           onOpenStatusModal={() => setStatusModalOpen(true)}
           sidebarOpen={sidebarOpen}
           onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
-          language={language}
-          onToggleLanguage={handleToggleLanguage}
-          theme={theme}
-          onToggleTheme={handleToggleTheme}
         />
 
-        {/* Messages Stream */}
-        <div className="messages-container">
-          {messages.length === 0 ? (
-            <div className="welcome-container">
-              <div className="welcome-icon">
-                <Landmark size={36} color="#006a4e" />
-              </div>
-              <h2 className="welcome-heading">বাংলাদেশ নাগরিক সেবা সহকারী</h2>
-              <p className="welcome-subtext">
-                পাসপোর্ট, জাতীয় পরিচয়পত্র (NID) অথবা ই-টিন (TIN) সংক্রান্ত যেকোনো সরকারি সেবা সম্পর্কে নির্ভরযোগ্য নির্দেশনা পান।
-              </p>
-
-              <div style={{ width: '100%', marginTop: '16px' }}>
-                <div className="section-label" style={{ textAlign: 'center' }}>
-                  উদাহরণ প্রশ্নসমূহ (সরাসরি ক্লিক করে জানতে পারেন)
+        {/* Outer scroll container spanning full width (100%) so the scrollbar sits at the far right edge of the viewport like ChatGPT */}
+        <div className="messages-scroll-area">
+          <div className="messages-container">
+            {messages.length === 0 ? (
+              <div className="welcome-container">
+                <div className="welcome-icon">
+                  <Landmark size={36} color={theme === 'dark' ? '#10b981' : '#006a4e'} />
                 </div>
-                <ExampleQuestions onSelect={(q) => handleSendMessage(q)} />
-              </div>
-            </div>
-          ) : (
-            messages.map((msg) => (
-              <ChatMessage
-                key={msg.id}
-                message={msg}
-                onFeedback={handleFeedback}
-              />
-            ))
-          )}
+                <h2 className="welcome-heading">{t.welcomeHeading}</h2>
+                <p className="welcome-subtext">{t.welcomeSubtext}</p>
 
-          {/* Loading Shimmer / Typing Indicator */}
-          {loading && (
-            <div className="message-row assistant">
-              <div className="avatar bot-avatar">
-                <Landmark size={18} color="#006a4e" />
+                <div style={{ width: '100%', marginTop: '16px' }}>
+                  <div className="section-label" style={{ textAlign: 'center' }}>
+                    {t.examplesHeading}
+                  </div>
+                  <ExampleQuestions examples={t.examples} onSelect={(q) => handleSendMessage(q)} />
+                </div>
               </div>
-              <div className="loading-box">
-                <div className="spinner" />
-                <span>{loadingStatus || 'সরকারি তথ্য অনুসন্ধান ও উত্তর তৈরি করা হচ্ছে...'}</span>
-              </div>
-            </div>
-          )}
+            ) : (
+              messages.map((msg) => (
+                <ChatMessage
+                  key={msg.id}
+                  message={msg}
+                  onFeedback={handleFeedback}
+                  t={t}
+                  theme={theme}
+                />
+              ))
+            )}
 
-          <div ref={messagesEndRef} />
+            {/* Loading Shimmer / Typing Indicator */}
+            {loading && (
+              <div className="message-row assistant">
+                <div className="avatar bot-avatar">
+                  <Landmark size={18} color={theme === 'dark' ? '#10b981' : '#006a4e'} />
+                </div>
+                <div className="loading-box">
+                  <div className="spinner" />
+                  <span>{loadingStatus || t.loadingAnswer}</span>
+                </div>
+              </div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </div>
         </div>
 
-        {/* Sticky Input Bar */}
+        {/* Sticky Bottom Input Bar */}
         <div className="input-area-wrapper">
           <div className="input-box-container">
             <textarea
               ref={textareaRef}
               rows={1}
               className="chat-textarea"
-              placeholder="আপনার প্রশ্ন লিখুন... (Enter চাপলে পাঠানো হবে, e.g. পাসপোর্ট করতে কী কী কাগজ লাগে?)"
+              placeholder={t.inputPlaceholder}
               value={input}
               onChange={handleTextareaInput}
               onKeyDown={handleKeyDown}
@@ -442,14 +459,13 @@ export default function App() {
               className="send-button"
               onClick={() => handleSendMessage()}
               disabled={!input.trim() || loading}
-              title="পাঠান (Send)"
+              title={t.sendTitle}
+              aria-label="Send query"
             >
               <Send size={18} />
             </button>
           </div>
-          <p className="input-disclaimer">
-            নাগরিক সেবা এআই ভুল করতে পারে। গুরুত্বপূর্ণ তথ্যে সংশ্লিষ্ট সরকারি কর্তৃপক্ষ থেকে যাচাই করুন।
-          </p>
+          <p className="input-disclaimer">{t.inputDisclaimer}</p>
         </div>
       </main>
 
@@ -459,6 +475,8 @@ export default function App() {
         onClose={() => setStatusModalOpen(false)}
         statusData={statusData}
         onRefresh={checkHealth}
+        t={t}
+        theme={theme}
       />
     </div>
   );

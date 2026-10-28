@@ -6,7 +6,6 @@ import {
   ThumbsDown,
   BookOpen,
   Info,
-  Check,
   ChevronDown,
   ChevronUp,
   Landmark,
@@ -16,7 +15,7 @@ import {
 import CitationCard from './CitationCard';
 import MarkdownView from './MarkdownView';
 
-export default function ChatMessage({ message, onFeedback }) {
+export default function ChatMessage({ message, onFeedback, t, theme }) {
   const {
     role,
     content,
@@ -32,6 +31,7 @@ export default function ChatMessage({ message, onFeedback }) {
   const [showErrorTech, setShowErrorTech] = useState(false);
 
   const isUser = role === 'user';
+  const primaryIconColor = theme === 'dark' ? '#10b981' : '#006a4e';
 
   const handleCitationClick = (citationNumber) => {
     setCitationsOpen(true);
@@ -49,7 +49,7 @@ export default function ChatMessage({ message, onFeedback }) {
     <div className={`message-row ${role}`}>
       {!isUser && (
         <div className="avatar bot-avatar" title="Citizen Services AI">
-          <Landmark size={18} color="#006a4e" />
+          <Landmark size={18} color={primaryIconColor} />
         </div>
       )}
 
@@ -64,7 +64,7 @@ export default function ChatMessage({ message, onFeedback }) {
                 <div className="fallback-banner">
                   <AlertTriangle size={20} style={{ flexShrink: 0, marginTop: '2px' }} />
                   <div>
-                    <strong>অপ্রতুল তথ্য (Insufficient Evidence):</strong>
+                    <strong>{t?.insufficientEvidence || 'অপ্রতুল তথ্য (Insufficient Evidence)'}:</strong>
                     <div style={{ marginTop: '4px' }}>{content}</div>
                   </div>
                 </div>
@@ -75,7 +75,7 @@ export default function ChatMessage({ message, onFeedback }) {
                 <div className="error-banner">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <AlertCircle size={18} />
-                    <strong>ত্রুটি ঘটেছে (Error):</strong>
+                    <strong>{t?.errorTitle || 'ত্রুটি ঘটেছে (Error)'}:</strong>
                   </div>
                   <div style={{ marginTop: '6px' }}>{content}</div>
 
@@ -83,10 +83,10 @@ export default function ChatMessage({ message, onFeedback }) {
                     <div style={{ marginTop: '10px' }}>
                       <button
                         className="btn-icon"
-                        style={{ fontSize: '0.8rem', color: '#b91c1c', display: 'flex', alignItems: 'center', gap: '4px' }}
+                        style={{ fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '4px' }}
                         onClick={() => setShowErrorTech(!showErrorTech)}
                       >
-                        <span>কারিগরি বিবরণ (Diagnostics)</span>
+                        <span>{t?.diagnosticsBtn || 'কারিগরি বিবরণ (Diagnostics)'}</span>
                         {showErrorTech ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                       </button>
                       {showErrorTech && (
@@ -112,7 +112,7 @@ export default function ChatMessage({ message, onFeedback }) {
                   {limitations.map((lim, idx) => (
                     <div key={idx} className="limitation-box">
                       <Info size={14} style={{ display: 'inline', marginRight: '6px' }} />
-                      <span><b>সতর্কবার্তা:</b> {lim}</span>
+                      <span><b>সতর্কবার্তা / Note:</b> {lim}</span>
                     </div>
                   ))}
                 </div>
@@ -126,14 +126,20 @@ export default function ChatMessage({ message, onFeedback }) {
                     onClick={() => setCitationsOpen(!citationsOpen)}
                   >
                     <BookOpen size={16} />
-                    <span>যাচাইকৃত সরকারি তথ্যসূত্র ({citations.length}টি সূত্র)</span>
+                    <span>{t?.sourcesHeader || 'তথ্যসূত্র ও উদ্ধৃতি (Verified Sources)'} ({citations.length})</span>
                     {citationsOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                   </div>
 
                   {citationsOpen && (
                     <div className="citations-list">
                       {citations.map((cit, idx) => (
-                        <CitationCard key={cit.source_id || idx} citation={cit} index={idx + 1} />
+                        <CitationCard
+                          key={cit.source_id || idx}
+                          citation={cit}
+                          index={idx + 1}
+                          t={t}
+                          theme={theme}
+                        />
                       ))}
                     </div>
                   )}
@@ -145,7 +151,7 @@ export default function ChatMessage({ message, onFeedback }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   {latency_ms && (
                     <>
-                      <Clock size={12} style={{ color: '#94a3b8' }} />
+                      <Clock size={12} style={{ opacity: 0.7 }} />
                       <span>{latency_ms >= 1000 ? `${(latency_ms / 1000).toFixed(1)}s` : `${Math.round(latency_ms)}ms`}</span>
                     </>
                   )}
@@ -153,18 +159,22 @@ export default function ChatMessage({ message, onFeedback }) {
 
                 {status === 'answered' && (
                   <div className="feedback-actions">
-                    <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>উত্তরটি কি সহায়ক ছিল?</span>
+                    <span style={{ fontSize: '0.72rem', opacity: 0.8 }}>
+                      {t?.feedbackHelpful ? `${t.feedbackHelpful}?` : 'সহায়ক?'}
+                    </span>
                     <button
                       className={`btn-icon ${feedback === 'helpful' ? 'active' : ''}`}
                       onClick={() => onFeedback && onFeedback(message, 'helpful')}
-                      title="সহায়ক (Helpful)"
+                      title={t?.feedbackHelpful || 'Helpful'}
+                      aria-label="Helpful"
                     >
                       <ThumbsUp size={14} />
                     </button>
                     <button
                       className={`btn-icon ${feedback === 'not_helpful' ? 'active' : ''}`}
                       onClick={() => onFeedback && onFeedback(message, 'not_helpful')}
-                      title="সহায়ক নয় (Not Helpful)"
+                      title={t?.feedbackNotHelpful || 'Not Helpful'}
+                      aria-label="Not Helpful"
                     >
                       <ThumbsDown size={14} />
                     </button>
@@ -184,4 +194,3 @@ export default function ChatMessage({ message, onFeedback }) {
     </div>
   );
 }
-
