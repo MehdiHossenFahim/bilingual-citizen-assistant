@@ -51,10 +51,33 @@ const apiFetch = async (path, options = {}) => {
 };
 
 export default function App() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('app_chat_messages');
+        if (saved) return JSON.parse(saved);
+      } catch (err) {
+        // Fallback to empty if parse fails
+      }
+    }
+    return [];
+  });
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState('');
+
+  // Persist messages across page reloads
+  useEffect(() => {
+    try {
+      if (messages && messages.length > 0) {
+        localStorage.setItem('app_chat_messages', JSON.stringify(messages));
+      } else {
+        localStorage.removeItem('app_chat_messages');
+      }
+    } catch (err) {
+      // Ignore storage quota errors
+    }
+  }, [messages]);
   // Website UI Language (Bangla <-> English)
   const [uiLang, setUiLang] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -366,6 +389,11 @@ export default function App() {
   const handleNewChat = () => {
     setMessages([]);
     setInput('');
+    try {
+      localStorage.removeItem('app_chat_messages');
+    } catch (err) {
+      // Ignore storage errors
+    }
   };
 
   return (

@@ -75,3 +75,4 @@ export function useTypewriterPlaceholder(
 
   return displayText || (phrases && phrases[0]) || '';
 }
+
