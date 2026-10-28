@@ -38,6 +38,15 @@ export const translations = {
 
     // Chat & Input
     inputPlaceholder: 'আপনার প্রশ্ন লিখুন... (Enter চাপলে পাঠানো হবে, e.g. পাসপোর্ট করতে কী কী কাগজ লাগে?)',
+    placeholderPhrases: [
+      'পাসপোর্ট করতে কী কী কাগজ লাগে?...',
+      'NID কার্ড হারিয়ে গেলে কী করণীয়?...',
+      'ই-টিন (e-TIN) সনদ কিভাবে নিব?...',
+      'জরুরি পাসপোর্ট নবায়নের ফি কত?...',
+      'জাতীয় পরিচয়পত্র সংশোধনের নিয়ম কি?...',
+      'ট্যাক্স রিটার্ন দাখিলের শেষ তারিখ কবে?...',
+      'আপনার প্রশ্ন লিখুন... (Enter চাপলে পাঠানো হবে)',
+    ],
     sendTitle: 'পাঠান (Send)',
     inputDisclaimer: 'নাগরিক সেবা এআই ভুল করতে পারে। গুরুত্বপূর্ণ তথ্যে সংশ্লিষ্ট সরকারি কর্তৃপক্ষ থেকে যাচাই করুন।',
     loadingAnswer: 'সরকারি তথ্য অনুসন্ধান ও উত্তর তৈরি করা হচ্ছে...',
@@ -134,6 +143,15 @@ export const translations = {
 
     // Chat & Input
     inputPlaceholder: 'Ask a question... (Press Enter to send, e.g. What documents are required for passport?)',
+    placeholderPhrases: [
+      'What documents are required for a passport application?...',
+      'How do I apply for an NID correction online?...',
+      'What is the procedure to get an e-TIN certificate?...',
+      'What are the urgent passport renewal fees?...',
+      'What should I do if my NID card is lost?...',
+      'What is the minimum tax-free income threshold?...',
+      'Ask a citizen service question... (Press Enter to send)',
+    ],
     sendTitle: 'Send query',
     inputDisclaimer: 'Citizen Services AI may make mistakes. Please verify critical information with official government authorities.',
     loadingAnswer: 'Searching official gazettes & formulating response...',

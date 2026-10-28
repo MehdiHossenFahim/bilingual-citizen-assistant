@@ -6,6 +6,7 @@ import ChatMessage from './components/ChatMessage';
 import ExampleQuestions from './components/ExampleQuestions';
 import SystemStatusModal from './components/SystemStatusModal';
 import { translations } from './i18n';
+import { useTypewriterPlaceholder } from './hooks/useTypewriterPlaceholder';
 
 const getBackendUrl = () => {
   if (import.meta.env.VITE_BACKEND_URL) {
@@ -71,6 +72,14 @@ export default function App() {
   };
 
   const t = translations[uiLang] || translations.bn;
+
+  // Animated rotating placeholder for the input box
+  const animatedPlaceholder = useTypewriterPlaceholder(t.placeholderPhrases, {
+    enabled: !loading && input.length === 0,
+    typingSpeed: 45,
+    deletingSpeed: 25,
+    pauseDuration: 2200,
+  });
 
   // Model response generation language preference (auto / bn / en)
   const [language, setLanguage] = useState('auto');
@@ -450,7 +459,7 @@ export default function App() {
               ref={textareaRef}
               rows={1}
               className="chat-textarea"
-              placeholder={t.inputPlaceholder}
+              placeholder={animatedPlaceholder || t.inputPlaceholder}
               value={input}
               onChange={handleTextareaInput}
               onKeyDown={handleKeyDown}
